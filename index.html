@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Official Korean Adopt Me Server! Low ping, cute community, dedicated servers.">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Adopt Me Korea! 🌙 Official Korean Server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a0a0f 0%, #1a0a2e 40%, #0d0d1a 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Stars background - animated */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkleStar var(--duration, 3s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        
+        @keyframes twinkleStar {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(135deg, white, rgba(255, 105, 180, 0.8));
+            border-radius: 50%;
+            animation: shootStar 4s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes shootStar {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-300px) translateY(300px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 40%, rgba(255, 105, 180, 0.08), transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(100, 50, 150, 0.12), transparent 50%),
+                radial-gradient(circle at 50% 30%, rgba(255, 200, 220, 0.05), transparent 60%);
+            backdrop-filter: blur(4px);
+            z-index: 0;
+            pointer-events: none;
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating orbs effect */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            animation: floatOrb 15s ease-in-out infinite;
+        }
+        
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(40px, 40px) scale(1.05); }
+        }
+
+        /* Particle stars canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating pets */
+        .floating {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating span {
+            position: absolute;
+            font-size: 32px;
+            animation: floatPet linear infinite;
+            opacity: 0;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
+        }
+
+        @keyframes floatPet {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.5; transform: translateY(100vh) rotate(0deg) scale(0.8); }
+            50% { opacity: 0.4; transform: translateY(50vh) rotate(180deg) scale(1); }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Confetti canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 50px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 45px 30px 40px;
+            background: rgba(15, 10, 25, 0.65);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 105, 180, 0.15);
+            animation: fadeInDown 0.6s ease, glowPulse 3s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 105, 180, 0.2); }
+            50% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 45px rgba(255, 105, 180, 0.4); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 10vw, 4.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9bbe, #ff6b9d, #ffb8d0);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255,105,180,0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255,105,180,0.6)); }
+        }
+
+        .hero .tagline {
+            font-size: clamp(1.1rem, 5vw, 1.5rem);
+            font-weight: 700;
+            color: #ffb8d0;
+            background: rgba(255, 105, 180, 0.15);
+            display: inline-block;
+            padding: 6px 25px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero .description {
+            font-size: 1rem;
+            color: #c0a8c0;
+            max-width: 550px;
+            margin: 0 auto 20px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* PLAY BUTTON */
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #ff6b9d, #d44a7a, #ff6b9d);
+            background-size: 200% 200%;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+            padding: 16px 48px;
+            border-radius: 60px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 105, 180, 0.5);
+            transition: all 0.15s ease;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 2s infinite, btnFloat 2s infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes btnFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .play-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .play-btn:hover {
+            gap: 22px;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 105, 180, 0.7);
+        }
+
+        /* Tutorial Section */
+        .tutorial-section {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 48px;
+            padding: 35px 30px;
+            margin: 35px 0 45px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tutorial-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #ff9bbe, #ff6b9d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
+        }
+
+        .tutorial-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(25, 18, 40, 0.7);
+            border-radius: 35px;
+            padding: 20px 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 105, 180, 0.25);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+        }
+
+        .step:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 105, 180, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .step-number {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 12px;
+            transition: all 0.3s;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        .step-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffb8d0;
+            margin-bottom: 6px;
+        }
+
+        .step-desc {
+            font-size: 0.8rem;
+            color: #a890b0;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 35px 0 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(100deg, #ff6b9d, #d44a7a);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(25, 18, 40, 0.9);
+            color: #ffb8d0;
+            border: 1px solid rgba(255, 105, 180, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 35px 0 45px;
+        }
+
+        .stat-item {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 18px 38px;
+            border-radius: 50px;
+            text-align: center;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 105, 180, 0.6);
+        }
+
+        .stat-number {
+            font-size: 2.3rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #ff9ebb, #ff6b9d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #b090b8;
+            letter-spacing: 1.5px;
+        }
+
+        /* Server Grid */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #ff9ebb, #ff6b9d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 55px 0 12px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #b090b8;
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .server-card {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 45px;
+            padding: 25px;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .server-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.08), transparent);
+            transition: left 0.5s;
+        }
+
+        .server-card:hover::before {
+            left: 100%;
+        }
+
+        .server-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 105, 180, 0.6);
+        }
+
+        .server-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffb8d0, #ff8fb3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .server-location {
+            font-size: 0.75rem;
+            color: #a890b0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .badge {
+            background: rgba(255, 105, 180, 0.15);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #ffb8d0;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            transition: all 0.2s;
+        }
+
+        .badge:hover {
+            background: rgba(255, 105, 180, 0.3);
+            transform: scale(1.05);
+        }
+
+        .ping {
+            font-size: 0.75rem;
+            color: #7ac0a8;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .join-link {
+            color: #ff9ebb;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .join-link:hover {
+            gap: 15px;
+            color: #ffd0e0;
+        }
+
+        /* FAQ */
+        .faq-section {
+            margin: 65px 0 45px;
+        }
+
+        .faq-item {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 45px;
+            padding: 20px 30px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            transform: translateX(8px);
+            border-color: rgba(255, 105, 180, 0.6);
+        }
+
+        .faq-question {
+            font-weight: 800;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+            color: #ffb8d0;
+        }
+
+        .faq-question span {
+            transition: transform 0.3s;
+        }
+
+        .faq-item:hover .faq-question span {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 14px;
+            color: #b090b8;
+            line-height: 1.5;
+            font-size: 0.85rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 105, 180, 0.3);
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .footer a {
+            color: #b090b8;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff9bbe, #ff6b9d);
+            transition: width 0.3s;
+        }
+
+        .footer a:hover::after {
+            width: 100%;
+        }
+
+        .footer a:hover {
+            color: #ffb8d0;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 99;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            transition: all 0.1s;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b9d, #d44a7a);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 15px 15px 40px; }
+            .hero { padding: 30px 20px; }
+            .play-btn { font-size: 1.2rem; padding: 12px 30px; }
+            .step { min-width: 100%; }
+            .stat-item { padding: 12px 25px; min-width: 100px; }
+            .stat-number { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="starsContainer"></div>
+<div class="floating" id="floatingElements"></div>
+<canvas id="particleCanvas"></canvas>
+<canvas id="confettiCanvas"></canvas>
+
+<div class="container">
+    <header class="hero">
+        <h1>Adopt Me Korea!</h1>
+        <div class="tagline">🌙 Official Korean Server 🌙</div>
+        <div class="description">Low ping, cozy dark mode community, and the best gaming experience on Korean servers. Join over 150,000+ Korean players right now!</div>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" rel="noopener noreferrer" class="play-btn" id="playBtn">
+            🎮 PLAY NOW ✨
+        </a>
+    </header>
+
+    <div class="tutorial-section">
+        <div class="tutorial-title">🐾 HOW TO START PLAYING? 🐾</div>
+        <div class="tutorial-steps">
+            <div class="step"><div class="step-number">1</div><div class="step-title">Choose Server</div><div class="step-desc">Pick any server from the list below</div></div>
+            <div class="step"><div class="step-number">2</div><div class="step-title">Click Connect</div><div class="step-desc">Press the pink "Connect Now" button</div></div>
+            <div class="step"><div class="step-number">3</div><div class="step-title">Log in to Roblox</div><div class="step-desc">Sign in to your Roblox account</div></div>
+            <div class="step"><div class="step-number">4</div><div class="step-title">Enjoy!</div><div class="step-desc">Start playing on Korean servers!</div></div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="#servers" class="btn btn-primary">🎀 Choose Server</a>
+        <a href="#faq" class="btn btn-secondary">📘 FAQ</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item"><div class="stat-number">150K+</div><div class="stat-label">ACTIVE PLAYERS</div></div>
+        <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">DEDICATED SERVERS</div></div>
+        <div class="stat-item"><div class="stat-number">&lt;20ms</div><div class="stat-label">AVG PING (SEOUL)</div></div>
+    </div>
+
+    <div class="section-title" id="servers">🍰 PREMIUM SERVERS 🍰</div>
+    <div class="section-sub">Choose your Korean gateway — dark & cozy premium experience. 🌙</div>
+
+    <div class="server-grid">
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🏙️ Seoul Main · Prime</div>
+            <div class="server-location">📍 Seoul, Korea (Primary)</div>
+            <div class="badges"><span class="badge">✨ Recommended</span><span class="badge">🇰🇷 Korean UI</span></div>
+            <div class="ping">💖 Ping: 16ms · Best for play</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🤝 Seoul Trading Hub</div>
+            <div class="server-location">📍 Seoul, Korea (Trade)</div>
+            <div class="badges"><span class="badge">🔄 Trading</span><span class="badge">🇰🇷🇺🇸 EN/KR</span></div>
+            <div class="ping">💖 Ping: 19ms · Active market</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🌊 Busan Gateway</div>
+            <div class="server-location">📍 Busan, Korea (Coastal)</div>
+            <div class="badges"><span class="badge">🎮 Casual</span><span class="badge">👥 KR Community</span></div>
+            <div class="ping">💖 Ping: 28ms · Relaxed</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🏔️ Daegu Central</div>
+            <div class="server-location">📍 Daegu, Korea (Mountain)</div>
+            <div class="badges"><span class="badge">🌙 Low Pop</span><span class="badge">🔒 Stable</span></div>
+            <div class="ping">💖 Ping: 24ms · Quiet</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🏞️ Incheon Port</div>
+            <div class="server-location">📍 Incheon, Korea (International)</div>
+            <div class="badges"><span class="badge">💎 Trading</span><span class="badge">🌟 Beginner</span></div>
+            <div class="ping">💖 Ping: 22ms · Newcomers</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+        <a href="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150" target="_blank" class="server-card">
+            <div class="server-name">🌏 Asia Pacific</div>
+            <div class="server-location">📍 Tokyo Route | Global</div>
+            <div class="badges"><span class="badge">🌐 EN/KR/JP</span><span class="badge">🤝 Global</span></div>
+            <div class="ping">💖 Ping: 48ms · Worldwide</div>
+            <div class="join-link">Connect Now →</div>
+        </a>
+    </div>
+
+    <div class="faq-section" id="faq">
+        <div class="section-title">🍬 KNOWLEDGE BASE 🍬</div>
+        <div class="section-sub">Everything about Korean servers & localization. 24/7 support. 🌙</div>
+        
+        <div class="faq-item"><div class="faq-question">🐣 How do I connect to a Korean server? <span>➕</span></div><div class="faq-answer">Simply click on any server from the list above, then click "Connect Now". Roblox will open and you'll be on a Korean server!</div></div>
+        <div class="faq-item"><div class="faq-question">🐼 Can I play with friends from other countries? <span>➕</span></div><div class="faq-answer">Absolutely! Korean servers support cross-region invites while keeping low ping for local players.</div></div>
+        <div class="faq-item"><div class="faq-question">🎉 Will events and updates be available? <span>➕</span></div><div class="faq-answer">Yes! Every seasonal event and update comes to Korean servers at the same time as global!</div></div>
+        <div class="faq-item"><div class="faq-question">🇰🇷 How to change language to Korean? <span>➕</span></div><div class="faq-answer">Set your Roblox account language to Korean in Settings → Language. Easy peasy!</div></div>
+    </div>
+
+    <footer class="footer">
+        <a href="#">🌸 Support</a>
+        <a href="#">💖 FAQ</a>
+        <a href="#">🍰 Content Creators</a>
+        <a href="#">🎀 Press</a>
+    </footer>
+</div>
+
+<button class="scroll-top" id="scrollTopBtn">↑ 💖</button>
+
+<script>
+    // Create stars
+    const starsContainer = document.getElementById('starsContainer');
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.setProperty('--delay', (Math.random() * 5) + 's');
+        starsContainer.appendChild(star);
+    }
+
+    // Create shooting stars
+    for (let i = 0; i < 6; i++) {
+        const shooting = document.createElement('div');
+        shooting.className = 'shooting-star';
+        shooting.style.left = Math.random() * 80 + 10 + '%';
+        shooting.style.top = Math.random() * 30 + '%';
+        shooting.style.animationDelay = (Math.random() * 8) + 's';
