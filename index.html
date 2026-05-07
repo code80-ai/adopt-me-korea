@@ -2,664 +2,838 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Adopt Me! — Korean Server</title>
-  <meta name="description" content="Adopt Me! Korean Server — играйте без лагов на выделенных серверах в Корее">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopt Me! — Korean Server | 100K+ Players</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap');
-    
     * {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-    /* Фоновый слой с GIF (ваша гифка) */
-    .hero-bg {
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0c10;
+      color: #fff;
+    }
+
+    .bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      opacity: 0.3;
       z-index: 0;
-      opacity: 0.4;
-      pointer-events: none;
     }
-    
-    /* Затемнение и градиенты для нужных оттенков */
-    .overlay-gradient {
+
+    .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, 
-        rgba(5, 8, 18, 0.88) 0%,
-        rgba(15, 20, 35, 0.85) 40%,
-        rgba(25, 18, 35, 0.9) 100%);
+      background: linear-gradient(135deg, #0a0c10 0%, #0f0f1a 100%);
+      opacity: 0.7;
       z-index: 1;
-      pointer-events: none;
     }
-    
-    /* Цветовые акценты (розово-золотые оттенки под гифку) */
-    .color-accent {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 30%, rgba(255, 140, 170, 0.12), transparent 60%),
-                  radial-gradient(circle at 80% 70%, rgba(255, 100, 80, 0.08), transparent 60%),
-                  radial-gradient(circle at 50% 50%, rgba(255, 200, 100, 0.05), transparent 70%);
-      z-index: 2;
-      pointer-events: none;
-    }
-    
-    body {
-      background: #0a0c12;
-      position: relative;
-    }
-    
-    /* Все контенты поверх фона */
+
     .content {
       position: relative;
-      z-index: 10;
+      z-index: 2;
     }
-    
-    /* Анимации */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    header {
+      background: rgba(10, 12, 16, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
     }
-    
-    @keyframes fadeInLeft {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
-    
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    
-    @keyframes glowPulse {
-      0%, 100% { text-shadow: 0 0 5px rgba(255, 140, 170, 0.5); }
-      50% { text-shadow: 0 0 20px rgba(255, 140, 170, 0.8); }
+
+    .logo-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #ff2d75, #ff0055);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+
+    .logo-icon i {
+      font-size: 24px;
     }
-    
-    @keyframes pingPulse {
-      0%, 100% { background-color: #ff6b9d; box-shadow: 0 0 0 0 rgba(255, 107, 157, 0.4); }
-      50% { background-color: #ff4081; box-shadow: 0 0 0 4px rgba(255, 107, 157, 0); }
+
+    .logo h1 {
+      font-size: 24px;
+      font-weight: 900;
     }
-    
-    .animate-fadeInUp {
-      animation: fadeInUp 0.8s ease forwards;
+
+    .logo span {
+      color: #ff2d75;
     }
-    
-    .animate-fadeInLeft {
-      animation: fadeInLeft 0.6s ease forwards;
+
+    .logo p {
+      font-size: 9px;
+      color: #888;
+      letter-spacing: 2px;
     }
-    
-    .animate-fadeInRight {
-      animation: fadeInRight 0.6s ease forwards;
+
+    .nav {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
     }
-    
-    .delay-100 { animation-delay: 0.1s; opacity: 0; }
-    .delay-200 { animation-delay: 0.2s; opacity: 0; }
-    .delay-300 { animation-delay: 0.3s; opacity: 0; }
-    .delay-400 { animation-delay: 0.4s; opacity: 0; }
-    
-    .glow-text {
-      animation: glowPulse 2s ease-in-out infinite;
+
+    .nav a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.3s;
     }
-    
-    .float-animation {
-      animation: float 3s ease-in-out infinite;
+
+    .nav a:hover, .nav a.active {
+      color: #ff2d75;
     }
-    
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 120px;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 45, 117, 0.15);
+      border: 1px solid rgba(255, 45, 117, 0.3);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ff2d75;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      font-size: 55px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .hero h2 span {
+      color: #ff2d75;
+    }
+
+    .hero p {
+      color: #aaa;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .hero .highlight {
+      font-size: 36px;
+      font-weight: 900;
+      color: #ff2d75;
+      display: inline-block;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff2d75, #ff0055);
+      border: none;
+      border-radius: 50px;
+      padding: 14px 32px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(255, 45, 117, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 45, 117, 0.5);
+      border-radius: 50px;
+      padding: 14px 28px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 45, 117, 0.1);
+      border-color: #ff2d75;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 45, 117, 0.15);
+      border-radius: 20px;
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    .stat-card i {
+      font-size: 32px;
+      color: #ff2d75;
+      margin-bottom: 12px;
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 900;
+      color: #ff2d75;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    .progress {
+      margin-top: 15px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff2d75, #ff6b9d);
+      border-radius: 3px;
+    }
+
+    .realtime {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .realtime i {
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .green-dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.5; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 80px 0 30px;
+    }
+
+    .section-header h3 {
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .section-header h3 span {
+      color: #ff2d75;
+    }
+
+    .section-header p {
+      color: #666;
+      font-size: 14px;
+      max-width: 400px;
+      text-align: right;
+    }
+
+    .servers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    @media (max-width: 900px) {
+      .servers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .servers-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .server-card {
-      background: linear-gradient(135deg, rgba(25, 28, 45, 0.85), rgba(18, 22, 38, 0.92));
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 140, 170, 0.2);
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      background: rgba(15, 18, 30, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 45, 117, 0.2);
+      border-radius: 20px;
+      padding: 22px;
+      transition: 0.3s;
       cursor: pointer;
     }
-    
+
     .server-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(255, 140, 170, 0.5);
-      box-shadow: 0 20px 30px -12px rgba(255, 140, 170, 0.2);
-      background: linear-gradient(135deg, rgba(35, 38, 60, 0.9), rgba(28, 32, 52, 0.95));
+      transform: translateY(-5px);
+      border-color: rgba(255, 45, 117, 0.5);
+      box-shadow: 0 20px 30px -15px rgba(255, 45, 117, 0.2);
     }
-    
-    .ping-badge {
-      background: rgba(255, 107, 157, 0.15);
-      color: #ff8aad;
-      border-radius: 100px;
-      padding: 4px 10px;
-      font-size: 0.75rem;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .card-header h4 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .ping {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 30px;
+      padding: 5px 12px;
+      font-size: 12px;
       font-weight: 600;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 6px;
     }
-    
+
     .ping-dot {
       width: 8px;
       height: 8px;
-      background-color: #ff6b9d;
+      background: #00ff88;
       border-radius: 50%;
-      display: inline-block;
-      animation: pingPulse 1.5s ease-in-out infinite;
     }
-    
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 20px;
+      color: #aaa;
+    }
+
+    .server-card p {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+      margin: 12px 0;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .players {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .players i {
+      color: #ff2d75;
+      font-size: 12px;
+    }
+
     .join-btn {
-      background: rgba(255, 140, 170, 0.12);
-      border: 1px solid rgba(255, 140, 170, 0.3);
-      transition: all 0.3s ease;
+      background: rgba(255, 45, 117, 0.15);
+      border: 1px solid rgba(255, 45, 117, 0.3);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff6b9d;
       cursor: pointer;
+      transition: 0.3s;
     }
-    
+
     .join-btn:hover {
-      background: #ff8aaa;
-      color: #0a0c12;
-      border-color: #ff8aaa;
-      transform: scale(1.02);
-      box-shadow: 0 5px 15px rgba(255, 140, 170, 0.3);
+      background: #ff2d75;
+      color: white;
+      border-color: #ff2d75;
     }
-    
-    .stat-number {
-      background: linear-gradient(135deg, #ffb8d0, #ff8aaa);
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 50px 0;
+    }
+
+    @media (max-width: 700px) {
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .faq-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 45, 117, 0.1);
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      gap: 18px;
+      transition: 0.3s;
+    }
+
+    .faq-card:hover {
+      border-color: rgba(255, 45, 117, 0.3);
+    }
+
+    .faq-icon {
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 45, 117, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .faq-icon i {
+      font-size: 22px;
+      color: #ff2d75;
+    }
+
+    .faq-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .faq-card p {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, rgba(255, 45, 117, 0.1), rgba(0, 0, 0, 0.3));
+      border: 1px solid rgba(255, 45, 117, 0.2);
+      border-radius: 28px;
+      text-align: center;
+      padding: 50px;
+      margin: 50px 0;
+    }
+
+    .cta h3 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      color: #888;
+      margin-bottom: 25px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 50px 0 30px;
+      margin-top: 50px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .footer-col h5 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      color: #666;
+      text-decoration: none;
+      font-size: 13px;
+      transition: 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: #ff2d75;
+    }
+
+    .social {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .social a {
+      width: 35px;
+      height: 35px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .social a:hover {
+      background: #ff2d75;
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 12px;
+      color: #444;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .huge-number {
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff2d75, #ff6b9d);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-    }
-    
-    .primary-btn {
-      background: linear-gradient(135deg, #ff8aaa, #ff6b9d);
-      transition: all 0.3s ease;
-      color: white;
-      cursor: pointer;
-    }
-    
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px -5px rgba(255, 107, 157, 0.4);
-    }
-    
-    .secondary-btn {
-      border: 1px solid rgba(255, 140, 170, 0.5);
-      background: rgba(255, 140, 170, 0.05);
-      transition: all 0.3s ease;
-      color: white;
-      cursor: pointer;
-    }
-    
-    .secondary-btn:hover {
-      background: rgba(255, 140, 170, 0.15);
-      border-color: rgba(255, 140, 170, 0.8);
-    }
-    
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #1a1d28;
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #ff8aaa;
-      border-radius: 10px;
-    }
-    
-    .nav-link {
-      position: relative;
-    }
-    
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #ff8aaa;
-      transition: width 0.3s ease;
-    }
-    
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
-    }
-    
-    .nav-link.active {
-      color: #ff8aaa;
-    }
-    
-    .faq-card {
-      background: rgba(20, 25, 45, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 140, 170, 0.15);
-      transition: all 0.3s ease;
-    }
-    
-    .faq-card:hover {
-      border-color: rgba(255, 140, 170, 0.35);
-      background: rgba(30, 35, 60, 0.75);
-    }
-    
-    /* Анимация для дракончика */
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-5px) rotate(1deg); }
-    }
-    
-    .dragon-float {
-      animation: gentleFloat 4s ease-in-out infinite;
+      display: inline-block;
     }
   </style>
 </head>
 <body>
-  
-  <!-- Фоновый GIF (Cupid Dragon из Adopt Me) -->
-  <img class="hero-bg" src="https://media1.tenor.com/m/sPfkWWpjtVwAAAAd/cupidphantom-cupid-dragon.gif" alt="Cupid Dragon Adopt Me background">
-  
-  <!-- Цветовые наложения для нужных оттенков -->
-  <div class="overlay-gradient"></div>
-  <div class="color-accent"></div>
-  
+  <img class="bg" src="https://media1.tenor.com/m/sPfkWWpjtVwAAAAd/cupidphantom-cupid-dragon.gif" alt="">
+  <div class="overlay"></div>
+
   <div class="content">
-    
-    <!-- Хедер / Навигация -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-[#0a0c12]/80 backdrop-blur-md border-b border-[#ff8aaa]/20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <!-- Логотип -->
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-[#ff8aaa] to-[#ff6b9d] rounded-xl flex items-center justify-center float-animation">
-              <i class="fas fa-paw text-white text-lg"></i>
-            </div>
-            <div>
-              <h1 class="text-2xl font-extrabold tracking-tight">
-                <span class="text-white">ADOPT</span> <span class="text-[#ff8aaa]">ME!</span>
-              </h1>
-            </div>
+    <header>
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-paw"></i></div>
+          <div>
+            <h1>ADOPT <span>ME!</span></h1>
+            <p>★ OFFICIAL KOREAN SERVER ★</p>
           </div>
-          
-          <!-- Навигация -->
-          <nav class="flex flex-wrap items-center gap-4 md:gap-6 text-sm font-medium">
-            <a href="#" class="nav-link text-gray-300 hover:text-[#ff8aaa] transition-all duration-300">DISCOVER</a>
-            <a href="#" class="nav-link text-gray-300 hover:text-[#ff8aaa] transition-all duration-300">NEWS</a>
-            <a href="#" class="nav-link text-gray-300 hover:text-[#ff8aaa] transition-all duration-300">MEDIA</a>
-            <a href="#" class="nav-link active text-[#ff8aaa] transition-all duration-300">NEXT UPDATE</a>
-            <a href="#" class="nav-link text-gray-300 hover:text-[#ff8aaa] transition-all duration-300">SUPPORT</a>
-            <a href="#" class="nav-link text-gray-300 hover:text-[#ff8aaa] transition-all duration-300">MERCH</a>
-          </nav>
+        </div>
+        <div class="nav">
+          <a href="#">DISCOVER</a>
+          <a href="#">NEWS</a>
+          <a href="#">MEDIA</a>
+          <a href="#" class="active">NEXT UPDATE</a>
+          <a href="#">SUPPORT</a>
+          <a href="#">MERCH</a>
         </div>
       </div>
     </header>
 
-    <main class="pt-24 pb-16">
-      
-      <!-- ГЛАВНЫЙ БАННЕР / HERO -->
-      <section class="relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-          <div class="text-center md:text-left md:flex md:justify-between md:items-center gap-8">
-            <div class="space-y-5 flex-1 animate-fadeInLeft">
-              <div class="inline-block bg-[#ff8aaa]/10 backdrop-blur-sm border border-[#ff8aaa]/30 rounded-full px-4 py-1.5 text-sm font-semibold text-[#ff8aaa] mb-4">
-                🎉 KOREA SERVER OFFICIALLY HERE!
-              </div>
-              <h2 class="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
-                <span class="text-white">Adopt Me!</span><br>
-                <span class="text-[#ff8aaa]">Korean Server!</span>
-              </h2>
-              <p class="text-xl text-gray-300 max-w-lg mx-auto md:mx-0">
-                Is finally here
-              </p>
-              <p class="text-gray-400 max-w-md mx-auto md:mx-0">
-                Lower ping, localized community, and seamless experience. Join over<br>
-                <span class="text-3xl font-bold text-[#ff8aaa]">50,000 players</span> right now on dedicated lag-free servers.
-              </p>
-              <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
-                <button id="joinMainBtn" class="primary-btn font-bold px-8 py-3 rounded-full transition-all duration-300 shadow-lg shadow-[#ff8aaa]/20 flex items-center gap-2">
-                  <i class="fas fa-gamepad"></i> Join Korean Server
-                </button>
-                <button class="secondary-btn font-medium px-8 py-3 rounded-full transition-all duration-300 flex items-center gap-2">
-                  <i class="fas fa-info-circle"></i> Server Guide
-                </button>
-              </div>
-            </div>
-            
-            <!-- Статистика (справа) -->
-            <div class="flex-1 grid grid-cols-3 gap-4 mt-10 md:mt-0 animate-fadeInRight">
-              <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
-                <div class="text-4xl font-black stat-number">50K+</div>
-                <div class="text-xs text-gray-400 mt-1">ACTIVE KR PLAYERS</div>
-              </div>
-              <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
-                <div class="text-4xl font-black stat-number">6</div>
-                <div class="text-xs text-gray-400 mt-1">DEDICATED SERVERS</div>
-              </div>
-              <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
-                <div class="text-4xl font-black stat-number">&lt;50ms</div>
-                <div class="text-xs text-gray-400 mt-1">AVG. PING (SEOUL)</div>
-              </div>
-            </div>
+    <div class="container">
+      <div class="hero">
+        <div>
+          <div class="badge"><i class="fas fa-crown"></i> ★ KOREA SERVER OFFICIALLY HERE! ★</div>
+          <h2>Adopt Me!<br><span>Korean Server!</span></h2>
+          <p>Is finally here ✨</p>
+          <p>Lower ping, localized community, and seamless experience. Join over <span class="highlight" id="totalPlayers">100,000</span> players right now on dedicated lag-free servers.</p>
+          <div class="buttons">
+            <button class="btn-primary" id="joinMainBtn"><i class="fas fa-gamepad"></i> Join Korean Server →</button>
+            <button class="btn-secondary" id="guideBtn"><i class="fas fa-info-circle"></i> Server Guide</button>
           </div>
         </div>
-      </section>
-
-      <!-- ЗАГОЛОВОК SERVER LIST -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-6">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-          <div>
-            <h3 class="text-3xl md:text-4xl font-bold text-white">SERVER LIST</h3>
-            <p class="text-gray-400 mt-2">Discover Korean Servers</p>
+        <div>
+          <div class="stats">
+            <div class="stat-card">
+              <i class="fas fa-users"></i>
+              <div class="stat-number" id="statPlayers">100K+</div>
+              <div class="stat-label">ACTIVE PLAYERS</div>
+              <div class="progress"><div class="progress-fill" style="width: 85%"></div></div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-server"></i>
+              <div class="stat-number">6</div>
+              <div class="stat-label">DEDICATED SERVERS</div>
+              <div class="progress"><div class="progress-fill" style="width: 100%"></div></div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-tachometer-alt"></i>
+              <div class="stat-number">&lt;50ms</div>
+              <div class="stat-label">AVG. PING (SEOUL)</div>
+              <div class="progress"><div class="progress-fill" style="width: 95%"></div></div>
+            </div>
           </div>
-          <p class="text-gray-500 text-sm max-w-md">Optimized routes for Korea and Asia-Pacific. Experience lag-free gameplay with our 6 dedicated servers.</p>
+          <div class="realtime">
+            <i class="fas fa-chart-line"></i> Real-time statistics updated every 5 seconds
+            <span class="green-dot"></span>
+          </div>
         </div>
       </div>
 
-      <!-- СЕТКА СЕРВЕРОВ -->
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          
-          <!-- Карточка сервера 1 -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Adopt Me! | Seoul Main</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">PRIMARY</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX KOREA</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 54ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              Primary Uplift Games gateway for the Korean community. Optimized low-latency routes for Seoul and surrounding regions.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
-
-          <!-- Карточка сервера 2 -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Seoul Trading Hub</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">OFFICIAL TRADE</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX PRO</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 24ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              The busiest trading hub in Asia. Connect with millions of traders. Real-time marketplace monitoring active.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
-
-          <!-- Карточка сервера 3 -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Busan Gateway</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">CASUAL</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX KR</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 57ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              A relaxed social gateway for Busan and Southern KR players. Perfect for making new friends and roleplaying.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
-
-          <!-- Карточка сервера 4 (Daegu) -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Daegu Central</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">STABLE</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX GRIND</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 42ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              Stable regional route for Daegu. Optimized for consistent performance and long grinding sessions.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
-
-          <!-- Карточка сервера 5 (Incheon) -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Incheon Port</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">BEGINNER</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX SAFE</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 26ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              Safe port connection for Incheon. Beginner-friendly environment with moderated local chat.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
-
-          <!-- Карточка сервера 6 (Asia Pacific) -->
-          <div class="server-card rounded-2xl p-5 transition-all duration-300" data-join-link="https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h4 class="text-xl font-bold text-white">Asia Pacific</h4>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">GLOBAL</span>
-                  <span class="text-xs px-2 py-0.5 bg-white/10 rounded-full">ROBLOX ASIA</span>
-                </div>
-              </div>
-              <div class="ping-badge">
-                <span class="ping-dot"></span> Ping: 50ms
-              </div>
-            </div>
-            <p class="text-gray-400 text-sm my-3 leading-relaxed">
-              Global network route via Tokyo. Connect with international friends via a high-speed multi-region backbone.
-            </p>
-            <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
-              <div class="flex items-center gap-2 text-gray-400 text-sm">
-                <i class="fas fa-users"></i> <span>he hicco players</span>
-              </div>
-              <button class="join-btn px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
-                <i class="fas fa-sign-in-alt"></i> JOIN
-              </button>
-            </div>
-          </div>
+      <div class="section-header">
+        <div>
+          <h3>SERVER <span>LIST</span></h3>
+          <p style="color:#888; font-size:14px; margin-top:5px;">Discover the best Korean servers</p>
         </div>
-      </section>
+        <p>⚡ Optimized routes for Korea & Asia-Pacific. Experience lag-free gameplay with our 6 dedicated servers.</p>
+      </div>
 
-      <!-- FAQ / KNOWLEDGE BASE -->
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
-        <div class="text-center mb-12">
-          <h3 class="text-3xl md:text-4xl font-bold text-white">KNOWLEDGE BASE</h3>
-          <p class="text-gray-400 mt-2">Frequently asked questions</p>
-          <p class="text-[#ff8aaa] text-sm mt-1">Everything about Korean servers & localization.</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="faq-card rounded-2xl p-6">
-            <div class="flex items-start gap-4">
-              <i class="fas fa-question-circle text-[#ff8aaa] text-2xl mt-1"></i>
-              <div>
-                <h4 class="text-lg font-bold text-white mb-2">How do I connect to a Korean server?</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">When you launch Adopt Me! on Roblox, the game will automatically route you to the nearest server with the best ping. You can also manually select "Seoul Main" from the server region dropdown in the game's server list.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="faq-card rounded-2xl p-6">
-            <div class="flex items-start gap-4">
-              <i class="fas fa-users text-[#ff8aaa] text-2xl mt-1"></i>
-              <div>
-                <h4 class="text-lg font-bold text-white mb-2">Can I play with international friends on Korean servers?</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">Absolutely! Just invite your friends via Roblox join feature. Korean servers support cross-region invites while maintaining low latency for local players.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="faq-card rounded-2xl p-6">
-            <div class="flex items-start gap-4">
-              <i class="fas fa-calendar-alt text-[#ff8aaa] text-2xl mt-1"></i>
-              <div>
-                <h4 class="text-lg font-bold text-white mb-2">Will events and updates be available on Korean servers?</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">Yes, every seasonal event, update, and patch rolls out simultaneously across all official servers including KR-dedicated nodes.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="faq-card rounded-2xl p-6">
-            <div class="flex items-start gap-4">
-              <i class="fas fa-language text-[#ff8aaa] text-2xl mt-1"></i>
-              <div>
-                <h4 class="text-lg font-bold text-white mb-2">How to change game language to Korean?</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">Set your Roblox account language to English in Settings → Language. Many in-game texts and UI will be displayed in Korean, and more translations are rolling out progressively.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+      <div class="servers-grid" id="serversGrid"></div>
 
-    <!-- ФУТЕР -->
-    <footer class="border-t border-[#ff8aaa]/20 bg-[#0a0c12]/90 py-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div class="flex items-center gap-2 mb-4">
-              <i class="fas fa-paw text-[#ff8aaa] text-xl"></i>
-              <span class="font-bold text-white text-lg">ADOPT ME!</span>
+      <div style="text-align: center; margin: 70px 0 30px;">
+        <h3 style="font-size: 36px; font-weight: 900;">KNOWLEDGE <span style="color:#ff2d75;">BASE</span></h3>
+        <p style="color:#888; margin-top: 8px;">Frequently asked questions</p>
+        <p style="color:#ff2d75; font-size: 13px; margin-top: 5px;">✨ Everything about Korean servers & localization ✨</p>
+      </div>
+
+      <div class="faq-grid" id="faqGrid"></div>
+
+      <div class="cta">
+        <h3>Ready to join the best Korean Roblox experience?</h3>
+        <p>100,000+ players already enjoying ultra-low latency servers</p>
+        <button class="btn-primary" id="ctaJoinBtn" style="padding: 14px 40px;"><i class="fas fa-gamepad"></i> Play Adopt Me! Korean Server →</button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+              <i class="fas fa-paw" style="color: #ff2d75; font-size: 24px;"></i>
+              <span style="font-weight: 800; font-size: 18px;">ADOPT ME!</span>
             </div>
-            <p class="text-gray-400 text-sm">Official Korean Server Hub. Low latency, local community, seamless gaming.</p>
+            <p style="color: #666; font-size: 13px; line-height: 1.5;">Official Korean Server Hub. Low latency, local community, seamless gaming.</p>
+            <div class="social">
+              <a href="#"><i class="fab fa-discord"></i></a>
+              <a href="#"><i class="fab fa-telegram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
           </div>
-          <div>
-            <h5 class="text-white font-semibold mb-3">Support</h5>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">FAQ</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Content Creators</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Support Center</a></li>
+          <div class="footer-col">
+            <h5>Support</h5>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Content Creators</a></li>
+              <li><a href="#">Support Center</a></li>
             </ul>
           </div>
-          <div>
-            <h5 class="text-white font-semibold mb-3">Legal</h5>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Privacy Policy</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Terms of Service</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">California Notice at Collection</a></li>
+          <div class="footer-col">
+            <h5>Legal</h5>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">California Notice</a></li>
             </ul>
           </div>
-          <div>
-            <h5 class="text-white font-semibold mb-3">Community</h5>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Press</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Fan Art & Ideas Policy</a></li>
-              <li><a href="#" class="hover:text-[#ff8aaa] transition">Discord</a></li>
+          <div class="footer-col">
+            <h5>Community</h5>
+            <ul>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Fan Art Policy</a></li>
+              <li><a href="#">Discord Server</a></li>
             </ul>
           </div>
         </div>
-        <div class="pt-8 text-center text-gray-500 text-sm border-t border-white/5">
-          <p>© 2026 Adopt Me! Korean Server. All rights reserved. Roblox is a trademark of Roblox Corporation.</p>
+        <div class="copyright">
+          <p>© 2025 Adopt Me! Korean Server. All rights reserved. Roblox is a trademark of Roblox Corporation.</p>
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- Скрипт для открытия ссылки -->
   <script>
-    // Ссылка для присоединения к игре
     const GAME_LINK = "https://roblox.com.ge/games/920587237/Adopt-Me?privateServerLinkCode=09221558288483602204763924831150";
-    
-    // Функция открытия ссылки в новой вкладке
-    function openGameLink() {
-      window.open(GAME_LINK, "_blank");
+    function openGame() { window.open(GAME_LINK, "_blank"); }
+
+    const servers = [
+      { name: "Adopt Me! | Seoul Main", icon: "crown", tags: ["PRIMARY", "ROBLOX KOREA"], ping: 54, players: 18750, desc: "Primary Uplift Games gateway for the Korean community. Optimized low-latency routes for Seoul and surrounding regions." },
+      { name: "Seoul Trading Hub", icon: "chart-line", tags: ["OFFICIAL TRADE", "ROBLOX PRO"], ping: 24, players: 25300, desc: "The busiest trading hub in Asia. Connect with millions of traders. Real-time marketplace monitoring active." },
+      { name: "Busan Gateway", icon: "ship", tags: ["CASUAL", "ROBLOX KR"], ping: 57, players: 14200, desc: "A relaxed social gateway for Busan and Southern KR players. Perfect for making new friends and roleplaying." },
+      { name: "Daegu Central", icon: "mountain-city", tags: ["STABLE", "ROBLOX GRIND"], ping: 42, players: 16800, desc: "Stable regional route for Daegu. Optimized for consistent performance and long grinding sessions." },
+      { name: "Incheon Port", icon: "anchor", tags: ["BEGINNER", "ROBLOX SAFE"], ping: 26, players: 11200, desc: "Safe port connection for Incheon. Beginner-friendly environment with moderated local chat." },
+      { name: "Asia Pacific", icon: "globe", tags: ["GLOBAL", "ROBLOX ASIA"], ping: 50, players: 19800, desc: "Global network route via Tokyo. Connect with international friends via a high-speed multi-region backbone." }
+    ];
+
+    const faqs = [
+      { icon: "question-circle", title: "How do I connect to a Korean server?", text: "When you launch Adopt Me! on Roblox, the game will automatically route you to the nearest server with the best ping. You can also manually select 'Seoul Main' from the server region dropdown." },
+      { icon: "users", title: "Can I play with international friends?", text: "Absolutely! Just invite your friends via Roblox join feature. Korean servers support cross-region invites while maintaining low latency." },
+      { icon: "calendar-alt", title: "Will events be available?", text: "Yes, every seasonal event, update, and patch rolls out simultaneously across all official servers including KR-dedicated nodes." },
+      { icon: "language", title: "How to change language to Korean?", text: "Set your Roblox account language to English in Settings → Language. Many in-game texts will be displayed in Korean." }
+    ];
+
+    function renderServers() {
+      const container = document.getElementById('serversGrid');
+      container.innerHTML = servers.map((s, i) => `
+        <div class="server-card" data-server="${i}">
+          <div class="card-header">
+            <h4><i class="fas fa-${s.icon}" style="color:#ff2d75; margin-right:6px;"></i> ${s.name}</h4>
+            <div class="ping"><span class="ping-dot"></span> Ping: ${s.ping}ms</div>
+          </div>
+          <div class="tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          <p>${s.desc}</p>
+          <div class="card-footer">
+            <div class="players"><i class="fas fa-users"></i> <span class="player-val" data-player="${i}">${s.players.toLocaleString()}</span> playing</div>
+            <button class="join-btn">JOIN NOW <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.join-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); openGame(); });
+      });
+      document.querySelectorAll('.server-card').forEach(card => {
+        card.addEventListener('click', () => openGame());
+      });
     }
-    
-    // Назначаем обработчики на все кнопки JOIN и на главную кнопку
-    document.getElementById("joinMainBtn")?.addEventListener("click", openGameLink);
-    
-    // Все кнопки JOIN внутри карточек серверов
-    document.querySelectorAll(".join-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Останавливаем всплытие, чтобы не сработало дважды
-        openGameLink();
-      });
+
+    function renderFaqs() {
+      const container = document.getElementById('faqGrid');
+      container.innerHTML = faqs.map(f => `
+        <div class="faq-card">
+          <div class="faq-icon"><i class="fas fa-${f.icon}"></i></div>
+          <div>
+            <h4>${f.title}</h4>
+            <p>${f.text}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let players = servers.map(s => s.players);
+    function startLiveCounter() {
+      setInterval(() => {
+        players = players.map(p => {
+          let change = Math.floor(Math.random() * 2001) - 1000;
+          let newVal = p + change;
+          return Math.max(8000, Math.min(40000, newVal));
+        });
+        players.forEach((p, i) => {
+          const el = document.querySelector(`.player-val[data-player="${i}"]`);
+          if (el) el.innerHTML = p.toLocaleString();
+        });
+        const total = players.reduce((a, b) => a + b, 0);
+        const totalK = (total / 1000).toFixed(1);
+        document.getElementById('totalPlayers').innerHTML = total.toLocaleString();
+        document.getElementById('statPlayers').innerHTML = totalK + 'K+';
+      }, 5000);
+    }
+
+    document.getElementById('joinMainBtn')?.addEventListener('click', openGame);
+    document.getElementById('ctaJoinBtn')?.addEventListener('click', openGame);
+    document.getElementById('guideBtn')?.addEventListener('click', () => {
+      alert('📖 SERVER GUIDE\n\n1. Launch Adopt Me!\n2. Click the server dropdown\n3. Select "Korea - Seoul Main"\n4. Enjoy low ping gaming!');
     });
-    
-    // Также по клику на всю карточку сервера (опционально)
-    document.querySelectorAll(".server-card").forEach(card => {
-      card.addEventListener("click", (e) => {
-        // Если клик был не по кнопке JOIN (чтобы не было двойного открытия)
-        if (!e.target.closest(".join-btn")) {
-          openGameLink();
-        }
-      });
-    });
+
+    renderServers();
+    renderFaqs();
+    startLiveCounter();
   </script>
 </body>
 </html>
